@@ -1,0 +1,5 @@
+{ //adding external path
+    "python.analysis.extraPaths": [
+        "./app"
+    ]
+}
