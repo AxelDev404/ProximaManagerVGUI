@@ -14,7 +14,7 @@ class MainWindow:
 
     def __init__(self , root) :
 
-        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'lock.ico')
+        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
         img_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'img', 'account-protection.png')
         font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
 
@@ -53,14 +53,14 @@ class MainWindow:
         self.titleMainFrame2.place(x=50 , y=50)
 
         self.secondaryTitleMainFrame2 = ttk.Label(self.MainFrame2 , text="Manager" , font=customFontTitle2 , background="#050617" , foreground="white")
-        self.secondaryTitleMainFrame2.place(x=120 , y= 100)
+        self.secondaryTitleMainFrame2.place(x=130 , y= 100)
 
         img2 = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/account-protection.png"
-        self.imageOpen2 = Image.open(img2).resize((300,300))
+        self.imageOpen2 = Image.open(img2).resize((240,240))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
 
         self.label2 = tk.Label(self.MainFrame2 , image=self.imageSecurty , bg="#050617")
-        self.label2.place(x=40 , y= 190)
+        self.label2.place(x=70 , y= 240)
         self.label2 = self.imageSecurty
 
 
@@ -82,14 +82,14 @@ class MainWindow:
         self.buttonLogIn = tk.Button(self.MainFrame , text="LogIn", image=self.ImageUp , bg="#064988" , takefocus=0 , width=80 , height=62 , foreground="white" , font=customFontRegister , borderwidth=0)
         self.buttonLogIn.place(x=348 , y=350)
         
-        self.username = ttk.Label(self.MainFrame , text="Username" , font="Helvetica" , foreground="#4788FF" , background="#050617")
+        self.username = ttk.Label(self.MainFrame , text="Username" , font="Helvetica 11 bold" , foreground="#4788FF" , background="#050617")
         self.username.place(x=97 , y=200)
-        self.usernameInput = ttk.Entry(self.MainFrame , width=37 , font=("Helvetica" , 12) , takefocus=0 , foreground="")
+        self.usernameInput = tk.Entry(self.MainFrame , width=36 , font=("Helvetica" , 12) , takefocus=0 , borderwidth=1)
         self.usernameInput.place(x=100 , y=225 , height=35)
 
-        self.password = ttk.Label(self.MainFrame , text="Password" , font="Helvetica" , foreground="#4788FF" , background="#050617")
+        self.password = ttk.Label(self.MainFrame , text="Password" , font="Helvetica 11 bold" , foreground="#4788FF" , background="#050617")
         self.password.place(x=97 , y=270)
-        self.passwordInput = ttk.Entry(self.MainFrame , width=37 , font=("Helvetica" , 12) , takefocus=0 , show="•")
+        self.passwordInput = tk.Entry(self.MainFrame , width=36 , font=("Helvetica" , 12) , takefocus=0 , show="•" , borderwidth=1)
         self.passwordInput.place(x=100 , y=293 , height=35)
 
 
