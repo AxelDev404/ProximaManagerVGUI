@@ -1,24 +1,98 @@
 
 import tkinter as tk
+from tkinter import *
+from tkinter import ttk
 from tkinter import font
+import tkinter.font as tkFont 
+from tkinter import PhotoImage
+import ctypes
+from PIL import Image, ImageTk  
+
+import os
 
 class MainWindow:
 
     def __init__(self , root) :
+
+        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'lock.ico')
+        img_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'img', 'account-protection.png')
+        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
+
+        ctypes.windll.gdi32.AddFontResourceW(font_path)
+        ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
+
+
         self.root  = root #test private after
         self.root.title("PROXIMA MANAGER")
-        self.size = tk.Tk.geometry(self.root , "500x500") #secondary parameter is always sel.root to call main and execute 
-        self.bgColor = tk.Tk.configure(self.root , background="#0B192C")
+        self.size = tk.Tk.geometry(self.root , "1000x600+1000+300") #secondary parameter is always self.root to call main and execute 
+        self.resize= tk.Tk.resizable(self.root, False,False) #false 1 block reizable x 2 false resizable y
+        self.root.attributes('-topmost' , 0) #sovrapposizione delle fiestre mettendo in secondo piano se seleziono altro
+        self.root.iconbitmap(icon_path)
 
-        #FONT DEFINE#
-        font_style = font.Font(family="Helvetica" , size=12 , weight = "normal" )
+        customFontTitle1 = tkFont.Font(family = "Tech Noir" ,size=36)
+        customFontTitle2 = tkFont.Font(family = "Tech Noir" , size=24)
+        customFontRegister = tkFont.Font(family = "Tech Noir" , size=14)
+        customFontSingIn = tkFont.Font(family = "Tech Noir" , size=21)
+        
+        #print(tkFont.families())
 
-        #MAIN WINDOWS
-        self.setLabel = tk.Label(self.root, text="Sing in Proxima Manager" , font=font_style , background="#0B192C" , foreground="white").pack()
-        self.setLabel2 = tk.Label(self.root , text="Username" , font=font_style , background="#0B192C" , foreground="white").pack(pady=20 , side="left")
-        self.button1 = tk.Button(self.root , text="Sing in" , font=font_style, background="#7E60BF" , foreground="white" , width=30 ).pack(fill="x" , side="right" , padx="100")
+        style = ttk.Style()#per creare un stile da una classe=
+        style.theme_use("clam")
 
+        style.configure("MainFrame.TFrame", background="#080915")# Colore per il primo frame
+        style.configure("MainFrame2.TFrame", background="#050617")  
+        #style.configure("TButton", background="#0787FF" , relief="flat" , foreground = "white" , borderwidth = 0 , height=70)
 
-
+        self.MainFrame2 = ttk.Frame(self.root , style="MainFrame2.TFrame", height=300 , width=400 )
+        self.MainFrame2.pack(side=LEFT , fill="both", expand=True)
     
+        self.MainFrame = ttk.Frame(self.root ,style="MainFrame.TFrame" , height=600 , width=750)
+        self.MainFrame.pack(side=RIGHT , fill="both", expand=True)
+
+        self.titleMainFrame2 = ttk.Label(self.MainFrame2 , text="Proxima" , font=customFontTitle1, background="#050617" , foreground="#4788FF")
+        self.titleMainFrame2.place(x=50 , y=50)
+
+        self.secondaryTitleMainFrame2 = ttk.Label(self.MainFrame2 , text="Manager" , font=customFontTitle2 , background="#050617" , foreground="white")
+        self.secondaryTitleMainFrame2.place(x=120 , y= 100)
+
+        img2 = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/account-protection.png"
+        self.imageOpen2 = Image.open(img2).resize((300,300))
+        self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
+
+        self.label2 = tk.Label(self.MainFrame2 , image=self.imageSecurty , bg="#050617")
+        self.label2.place(x=40 , y= 190)
+        self.label2 = self.imageSecurty
+
+
+
+        
+        self.SingInMainFrame = ttk.Label(self.MainFrame , text="Sing In", background="#080915" , font=customFontSingIn , foreground="white")
+        self.SingInMainFrame.place(x=100 , y=150)
+        
+        self.buttonRegister = tk.Button(self.MainFrame , text="Register" , bg="#0787FF" , takefocus=0 , width=16 , height=3 , foreground="white" , font=customFontRegister , borderwidth=0)
+        self.buttonRegister.place(x=100 , y=350)
+
+        img = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/login-.png"
+
+        self.imageOpen = Image.open(img).resize((50,50))
+        self.ImageUp = ImageTk.PhotoImage(self.imageOpen)
+        #self.label = tk.Label(self.MainFrame , image=self.ImageUp , bg="#0787FF")
+        self.label = self.ImageUp
+
+        self.buttonLogIn = tk.Button(self.MainFrame , text="LogIn", image=self.ImageUp , bg="#064988" , takefocus=0 , width=80 , height=62 , foreground="white" , font=customFontRegister , borderwidth=0)
+        self.buttonLogIn.place(x=348 , y=350)
+        
+        self.username = ttk.Label(self.MainFrame , text="Username" , font="Helvetica" , foreground="#4788FF" , background="#050617")
+        self.username.place(x=97 , y=200)
+        self.usernameInput = ttk.Entry(self.MainFrame , width=37 , font=("Helvetica" , 12) , takefocus=0 , foreground="")
+        self.usernameInput.place(x=100 , y=225 , height=35)
+
+        self.password = ttk.Label(self.MainFrame , text="Password" , font="Helvetica" , foreground="#4788FF" , background="#050617")
+        self.password.place(x=97 , y=270)
+        self.passwordInput = ttk.Entry(self.MainFrame , width=37 , font=("Helvetica" , 12) , takefocus=0 , show="•")
+        self.passwordInput.place(x=100 , y=293 , height=35)
+
+
+    #self.btm = ttk.Button(self.MainFrame , text="dio cane")
+          
     #def are the new function who manage the window like log in or error logIn authentification and all will be managed with the event listner with comand=self.on_button_clcik and de def will be execute it
