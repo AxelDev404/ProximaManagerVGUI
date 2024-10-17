@@ -21,6 +21,7 @@ class Register:
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
 
         customFontForSingUp = tkFont.Font(family="Tech Noir" , size=50)
+        customFontSlogan = tkFont.Font(family="Tech Noir" , size=35)
         
         self.root = root
         #self.root.attributes("-fullscreen" , True)
@@ -46,14 +47,20 @@ class Register:
         self.SingUpMainFrameSeconPart = ttk.Label(self.MainFrame, text="Up" , font=customFontForSingUp , foreground="#6CB8FF" , background="#070A1C")
         self.SingUpMainFrameSeconPart.place(x=244 , y=50)
 
-        self.SloganMainFrame2 = ttk.Label(self.MainFrame2 ,  text="Your" , font="Inter 35 bold" , foreground="white" , background="#0D112B" )
-        self.SloganMainFrame2.place(x=120  , y = 80)
+        self.SloganMainFrame2 = ttk.Label(self.MainFrame2 ,  text="Your" , font=customFontSlogan , foreground="white" , background="#0D112B" )
+        self.SloganMainFrame2.place(x=80  , y = 80)
 
-        self.Slogan2MainFrame2 = ttk.Label(self.MainFrame2 ,  text="data" , font="Inter 35" , foreground="#698CFF" , background="#0D112B" )
-        self.Slogan2MainFrame2.place(x=240  , y = 80)
+        self.Slogan2MainFrame2 = ttk.Label(self.MainFrame2 ,  text="data" , font=customFontSlogan , foreground="#698CFF" , background="#0D112B" )
+        self.Slogan2MainFrame2.place(x=260  , y = 80)
 
-        self.Slogan3MainFrame2 = ttk.Label(self.MainFrame2 ,  text="," , font="Inter 35" , foreground="white" , background="#0D112B" )
-        self.Slogan3MainFrame2.place(x=330  , y = 80)
+        self.Slogan3MainFrame2 = ttk.Label(self.MainFrame2 ,  text="," , font=customFontSlogan , foreground="white" , background="#0D112B" )
+        self.Slogan3MainFrame2.place(x=420  , y = 80)
+
+        self.Slogan4MainFrame2 = ttk.Label(self.MainFrame2 , text="Your" , font=customFontSlogan , foreground="white" , background="#0D112B" )
+        self.Slogan4MainFrame2.place(x=136 , y=150)
+
+        self.Slogan5MainFrame2 = ttk.Label(self.MainFrame2 , text="rules" , font=customFontSlogan , foreground="#698CFF" , background="#0D112B")
+        self.Slogan5MainFrame2.place(x=310 , y=150)
 
 
         img1 = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/cyber.png"   
