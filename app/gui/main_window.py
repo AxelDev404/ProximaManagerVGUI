@@ -15,6 +15,8 @@ import os
 from gui.dashboard import DashBoard
 from gui.register import Register
 
+from logic.db_user_manager import userManagement
+
 class MainWindow:
 
     def __init__(self , root) :
@@ -69,8 +71,6 @@ class MainWindow:
         self.label2 = self.imageSecurty
 
 
-
-        
         self.SingInMainFrame = ttk.Label(self.MainFrame , text="Sing In", background="#070A1C" , font=customFontSingIn , foreground="white")
         self.SingInMainFrame.place(x=100 , y=150)
         
@@ -86,39 +86,41 @@ class MainWindow:
 
         self.buttonLogIn = tk.Button(self.MainFrame , text="LogIn", image=self.ImageUp , bg="#064988" , takefocus=0 , width=80 , height=62 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.logged)
         self.buttonLogIn.place(x=348 , y=350)
+
+        self.inputVarUsername = tk.StringVar()
+        self.inputVarPassword = tk.StringVar()
+
+        self.inputVarUsername.set("")
+        self.inputVarPassword.set("")
         
         self.username = ttk.Label(self.MainFrame , text="Username" , font="Helvetica 11 " , foreground="#4788FF" , background="#070A1C")
         self.username.place(x=97 , y=200)
-        self.usernameInput = tk.Entry(self.MainFrame , width=41 , font=("Arial" , 11) , takefocus=0 , borderwidth=1)
+        self.usernameInput = tk.Entry(self.MainFrame , width=41 , font=("Arial" , 11) , takefocus=0 , borderwidth=1 , textvariable=self.inputVarUsername)
         self.usernameInput.place(x=100 , y=225 , height=35)
 
         self.password = ttk.Label(self.MainFrame , text="Password" , font="Helvetica 11 " , foreground="#4788FF" , background="#070A1C")
         self.password.place(x=97 , y=270)
-        self.passwordInput = tk.Entry(self.MainFrame , width=41 , font=("Arial" , 11) , takefocus=0 , show="•" , borderwidth=1)
+        self.passwordInput = tk.Entry(self.MainFrame , width=41 , font=("Arial" , 11) , takefocus=0 , show="•" , borderwidth=1 , textvariable=self.inputVarPassword)
         self.passwordInput.place(x=100 , y=293 , height=35)
 
 
+
     def logged(self):
+
+        userManager = userManagement()
+        
         username = self.usernameInput.get()
         password = self.passwordInput.get()
 
-        if  username == "root" and password == "root":
+        if  userManager.logIn(username , password):
             self.root.destroy()
             dashRoot = tk.Tk()
             dash = DashBoard(dashRoot)
         else:
             messagebox.showerror("        Invalid credentials try again                                                         .")
 
-            #errorMessageProximaManager = tk.Toplevel(self.root)
-            #errorMessageProximaManager.title("")#
-            #errorMessageProximaManager.geometry("370x100+1300+700")
-            #errorMessageProximaManager.configure(bg="white")
-
-            #label = ttk.Label(errorMessageProximaManager , text="Error Message : Invalid credentials , try again!" , font="Helvetica 11" , foreground="black" , background="white")
-            #label.pack(pady=20)
-            #buttonDestroy = tk.Button(errorMessageProximaManager, text="OK" , command=errorMessageProximaManager.destroy , bg="gray" , takefocus=0 , width=16 , height=1 ,font="Helvetica 10", foreground="black" ,  borderwidth=0)
-            #buttonDestroy.pack()
-        
+            self.inputVarUsername.set("")
+            self.inputVarPassword.set("")
 
     def registerPage(self):
         self.root.destroy()

@@ -16,6 +16,12 @@ class DashBoard:
     def __init__(self , root):
 
         icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
+        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
+
+        ctypes.windll.gdi32.AddFontResourceW(font_path)
+        ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
+
+        customFontSingIn = tkFont.Font(family = "Tech Noir" , size=21)
 
         self.root = root
         self.root  = root #test private after
@@ -41,21 +47,69 @@ class DashBoard:
 
         self.tab1 = tk.Frame(self.MainFrame , width=1500 , background = "#121528")
         self.tab2 = tk.Frame(self.MainFrame , width=1500 , background = "#121528")
+        self.tab3 = tk.Frame(self.MainFrame , width=1500 , background = "#121528")
+        self.tab4 = tk.Frame(self.MainFrame , width=1500 , background = "#121528")
 
         self.labelTab1 = tk.Label(self.tab1, text="TEST TAB 1")
         self.labelTab2 = tk.Label(self.tab2, text="TEST TAB 2")
+        self.labelTab3 = tk.Label(self.tab3, text="TEST TAB 3")
+        self.labelTab4 = tk.Label(self.tab4 , text="TEST TAB 4")
+        
 
         self.labelTab1.pack()
         self.labelTab2.pack()
+        self.labelTab3.pack()
+        self.labelTab4.pack()
 
-        self.addCredentialsTab = tk.Button(self.MenuFrame , text="Add Credentials", font="Inter 13" , background="#1D2447", foreground="white", command=lambda: self.showTab(self.tab1) , border=0 , padx=3 , pady=3)
-        self.addCredentialsTab.pack(fill="x" , pady=2)
 
-        self.ViewAllCredentialsTab = tk.Button(self.MenuFrame , text="View all Credentials", font="Inter 13" , background="#1D2447", foreground="white" , command=lambda: self.showTab(self.tab2) , border=0 , padx=3 , pady=3)
-        self.ViewAllCredentialsTab.pack(fill="x" , pady=2)
+        self.Title = tk.Label(self.MenuFrame , text="Proxima Manger" , font=customFontSingIn , background="#1B1A36" , foreground="white")
+        self.Title.pack(fill="x" , pady=40)
+
+        self.addCredentialsTab = tk.Button(self.MenuFrame , text="Add Credentials", font="Inter 13" , background="#1D2447", foreground="white", command=lambda: self.showTab(self.tab1) , border=0 , padx=5 , pady=5 , height=3)
+        self.addCredentialsTab.pack(fill="x" , pady=3)
+
+        self.ViewAllCredentialsTab = tk.Button(self.MenuFrame , text="View all Credentials", font="Inter 13" , background="#1D2447", foreground="white" , command=lambda: self.showTab(self.tab2) , border=0 , padx=5 , pady=5 , height=3)
+        self.ViewAllCredentialsTab.pack(fill="x" , pady=3)
+
+        self.FilterSearch = tk.Button(self.MenuFrame, text="Filter Search", font="Inter 13" , background="#1D2447", foreground="white" , command=lambda: self.showTab(self.tab3) , border=0 , padx=5 , pady=5 , height=3)
+        self.FilterSearch.pack(fill="x" , pady=3)
+
+        self.ManageCredentials = tk.Button(self.MenuFrame , text="Manage Credentials" , font="Inter 13" , background="#1D2447", foreground="white" , command=lambda: self.showTab(self.tab4) , border=0 , padx=5 , pady=5 , height=3)
+        self.ManageCredentials.pack(fill="x" , pady=3)
 
         self.addCredentialsTab.bind("<Enter>" ,self.on_hover)
         self.addCredentialsTab.bind("<Leave>" ,self.leave_hover)
+        
+        self.ViewAllCredentialsTab.bind("<Enter>" ,self.on_hover2)
+        self.ViewAllCredentialsTab.bind("<Leave>" ,self.leave_hover2)
+
+        self.FilterSearch.bind("<Enter>" ,self.on_hover3)
+        self.FilterSearch.bind("<Leave>" ,self.leave_hover3)
+
+        self.ManageCredentials.bind("<Enter>" , self.on_hover4)
+        self.ManageCredentials.bind("<Leave>" , self.leave_hover4)
+
+        self.AreaPersonal = tk.Frame(self.MenuFrame , width=300 , background="#111735" , height=300)
+        self.AreaPersonal.pack(fill="x", side="bottom" )
+
+        img2 = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/login-.png"
+        self.imageOpen2 = Image.open(img2).resize((50,50))
+        self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
+        self.label2 = self.imageSecurty
+
+        self.buttonProfile = tk.Button(self.AreaPersonal , image=self.label2 , background="#111735" , border=0 , padx=5 , pady=5)
+        self.buttonProfile.pack(side="left" , padx=10 , pady=10)
+
+        self.buttonProfile.bind("<Enter>" , self.on_hoverProfile)
+        self.buttonProfile.bind("<Leave>" , self.leave_hoverProfile)
+
+        imgSettings = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/settings.png"
+        self.imageOpen2 = Image.open(imgSettings).resize((43,43))
+        self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
+        self.labelSettings = self.imageSecurty
+
+        self.buttonSettings = tk.Button(self.AreaPersonal , image=self.labelSettings , background="#111735" , border=0 , padx=5 , pady=5)
+        self.buttonSettings.pack(side="right" , padx=13 , pady=10)
 
     
     def showTab(self, tab_frame):
@@ -67,6 +121,29 @@ class DashBoard:
 
     def on_hover(self, e):
         self.addCredentialsTab.config(background = "#121528")
-
     def leave_hover(self, e):
         self.addCredentialsTab.config(background = "#1D2447")
+        
+
+    def on_hover2(self, e):
+        self.ViewAllCredentialsTab.config(background = "#121528")
+    def leave_hover2(self, a):
+        self.ViewAllCredentialsTab.config(background = "#1D2447")
+
+
+    def on_hover3(self, e):
+        self.FilterSearch.config(background = "#121528")
+    def leave_hover3(self, a):
+        self.FilterSearch.config(background = "#1D2447")
+
+
+    def on_hover4(self, e):
+        self.ManageCredentials.config(background = "#121528")
+    def leave_hover4(self , e):
+        self.ManageCredentials.config(background = "#1D2447")
+
+
+    def on_hoverProfile(self, e):
+        self.buttonProfile.config(background="#1D2447")
+    def leave_hoverProfile(self , e):
+        self.buttonProfile.config(background="#111735")
