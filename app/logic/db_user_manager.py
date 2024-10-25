@@ -35,6 +35,19 @@ class userManagement():
             print("Failed LOGIN invalid credetials")
         
         
+    def getUsernameProfile(self, username , pasword):
+        db = self.connection()
+        curosr = db.cursor()
+
+        sqlQuery = "SELECT username FROM user WHERE username = %s AND pwd = %s"
+        curosr.execute(sqlQuery, (username , pasword))
+
+        usr = curosr.fetchone()
+        curosr.close()
+        db.close()
+
+        if usr : 
+            userN = usr[0]
+            return userN
     
-        
         

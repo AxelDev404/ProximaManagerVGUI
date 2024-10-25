@@ -71,10 +71,10 @@ class MainWindow:
         self.label2 = self.imageSecurty
 
 
-        self.SingInMainFrame = ttk.Label(self.MainFrame , text="Sing In", background="#070A1C" , font=customFontSingIn , foreground="white")
+        self.SingInMainFrame = ttk.Label(self.MainFrame , text="Sign In", background="#070A1C" , font=customFontSingIn , foreground="white")
         self.SingInMainFrame.place(x=100 , y=150)
         
-        self.buttonRegister = tk.Button(self.MainFrame , text="Sing Up" , bg="#0787FF" , takefocus=0 , width=16 , height=3 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.registerPage)
+        self.buttonRegister = tk.Button(self.MainFrame , text="Sign Up" , bg="#0787FF" , takefocus=0 , width=16 , height=3 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.registerPage , cursor="hand2")
         self.buttonRegister.place(x=100 , y=350)
 
         img = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/login-.png"
@@ -84,7 +84,7 @@ class MainWindow:
         #self.label = tk.Label(self.MainFrame , image=self.ImageUp , bg="#0787FF")
         self.label = self.ImageUp
 
-        self.buttonLogIn = tk.Button(self.MainFrame , text="LogIn", image=self.ImageUp , bg="#064988" , takefocus=0 , width=80 , height=62 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.logged)
+        self.buttonLogIn = tk.Button(self.MainFrame , text="LogIn", image=self.ImageUp , bg="#064988" , takefocus=0 , width=80 , height=62 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.logged , cursor="hand2")
         self.buttonLogIn.place(x=348 , y=350)
 
         self.inputVarUsername = tk.StringVar()
@@ -95,12 +95,12 @@ class MainWindow:
         
         self.username = ttk.Label(self.MainFrame , text="Username" , font="Helvetica 11 " , foreground="#4788FF" , background="#070A1C")
         self.username.place(x=97 , y=200)
-        self.usernameInput = tk.Entry(self.MainFrame , width=41 , font=("Arial" , 11) , takefocus=0 , borderwidth=1 , textvariable=self.inputVarUsername)
+        self.usernameInput = tk.Entry(self.MainFrame , width=41 , font=("Inter" , 11) , takefocus=0 , borderwidth=1 , textvariable=self.inputVarUsername)
         self.usernameInput.place(x=100 , y=225 , height=35)
 
         self.password = ttk.Label(self.MainFrame , text="Password" , font="Helvetica 11 " , foreground="#4788FF" , background="#070A1C")
         self.password.place(x=97 , y=270)
-        self.passwordInput = tk.Entry(self.MainFrame , width=41 , font=("Arial" , 11) , takefocus=0 , show="•" , borderwidth=1 , textvariable=self.inputVarPassword)
+        self.passwordInput = tk.Entry(self.MainFrame , width=41 , font=("Inter" , 11) , takefocus=0 , show="•" , borderwidth=1 , textvariable=self.inputVarPassword)
         self.passwordInput.place(x=100 , y=293 , height=35)
 
 
@@ -115,7 +115,7 @@ class MainWindow:
         if  userManager.logIn(username , password):
             self.root.destroy()
             dashRoot = tk.Tk()
-            dash = DashBoard(dashRoot)
+            dash = DashBoard(dashRoot , username , password)
         else:
             messagebox.showerror("        Invalid credentials try again                                                         .")
 

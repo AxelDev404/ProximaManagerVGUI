@@ -103,7 +103,7 @@ class Register:
         self.phoneTextInput.place(x=140, y=520 , height=35)
 
 
-        self.buttonRegister = tk.Button(self.MainFrame , text="Sing Up" , bg="#0787FF" , takefocus=0 , width=25 , height=3 , foreground="white" , font=customFontRegister , borderwidth=0)
+        self.buttonRegister = tk.Button(self.MainFrame , text="Sign Up" , bg="#0787FF" , takefocus=0 , width=25 , height=3 , foreground="white" , font=customFontRegister , borderwidth=0)
         self.buttonRegister.place(x=140 , y=590)
 
         
