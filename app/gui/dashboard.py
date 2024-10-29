@@ -25,12 +25,13 @@ class DashBoard:
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
 
         customFontSingIn = tkFont.Font(family = "Tech Noir" , size=21)
+        customFontRegister = tkFont.Font(family = "Tech Noir" , size=14)
 
         self.root = root
         self.root  = root #test private after
         self.root.title("PROXIMA MANAGER")
         self.size = tk.Tk.geometry(self.root , "1300x700+350+200")
-        self.resizable = tk.Tk.resizable(self.root, False , False)
+        #self.resizable = tk.Tk.resizable(self.root, False , False)
         self.root.attributes('-topmost' , 0) 
         self.root.iconbitmap(icon_path)
         #self.root.configure(background = "#121528")
@@ -72,14 +73,19 @@ class DashBoard:
         self.tab5 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
 
         for tab in [self.tab1, self.tab2, self.tab3, self.tab4, self.tab5]:
-            tab.grid_rowconfigure(0, weight=1)  # Permette l'espansione della colonna
-            tab.grid_rowconfigure(1, weight=1) #tolgo l espansione con lo 0   
-            tab.grid_rowconfigure(2, weight=1) 
-            tab.grid_rowconfigure(3, weight=1) #tolgo l espansione con lo 0   
-            tab.grid_rowconfigure(4, weight=1) 
+            tab.grid_rowconfigure(0, weight=0)  # Permette l'espansione della colonna
+            tab.grid_rowconfigure(1, weight=0) #tolgo l espansione con lo 0   
+            tab.grid_rowconfigure(2, weight=0) 
+            tab.grid_rowconfigure(3, weight=0) #tolgo l espansione con lo 0   
+            tab.grid_rowconfigure(4, weight=0) 
+            tab.grid_rowconfigure(5, weight=0) #tolgo l espansione con lo 0   
+            tab.grid_rowconfigure(6, weight=0) 
+            tab.grid_rowconfigure(7, weight=0) #tolgo l espansione con lo 0   
+            tab.grid_rowconfigure(8, weight=0) 
+            tab.grid_rowconfigure(9, weight=0) 
             
             tab.grid_columnconfigure(0, weight=1)  # Permette l'espansione della colonna
-            tab.grid_columnconfigure(1, weight=1)   
+            tab.grid_columnconfigure(1, weight=0)   
             tab.grid_columnconfigure(2, weight=1)  
             tab.grid_columnconfigure(3, weight=1)   
             tab.grid_columnconfigure(4, weight=1)  
@@ -101,33 +107,35 @@ class DashBoard:
         #ADD CREDENTIAL TAB#
 
         self.Title =tk.Label(self.tab1 , text="Add Credentials" , font="Inter 13" , foreground="white" , background="#121528")
-        self.Title.grid(row = 0 , column = 2 , sticky="n" , pady=20)
+        self.Title.grid(row = 0 , column = 2, columnspan=2 , sticky="n" , pady=80)
 
         self.usernameTitle = tk.Label(self.tab1 , text="Username" , font="Inter 10" ,  foreground="white" , background="#121528")
-        self.usernameTitle.grid(row=1 , column=1 , sticky="sw" , pady=0, padx=(100,0))
+        self.usernameTitle.grid(row=1 , column=2 , columnspan=2)
 
         #self.showTab(self.tab1)
-        self.usernameRegistration = tk.Entry(self.tab1 , width=35 , border=1 , bg="white" , foreground="black" , font=("Inter" , 11))
-        self.usernameRegistration.grid(row=2 , column=1 , sticky="nw" , padx=(100,0) , pady=(0,60))
+        self.usernameRegistration = tk.Entry(self.tab1 , width=42 , border=1 , bg="white" , foreground="black" , font=("Inter" , 11))
+        self.usernameRegistration.grid(row=2 , column=2 ,  columnspan=2 , pady=(0,10))
 
         self.passwordTitle =  tk.Label(self.tab1 , text="Password" , font="Inter 10" , foreground="white" , background="#121528")
-        self.passwordTitle.grid(row=2 , column=1 , sticky="sw" , padx=(100,0) )
+        self.passwordTitle.grid(row=3 , column=2 , columnspan=2)
 
-        self.passwordRegistration = tk.Entry(self.tab1 , width=35 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
-        self.passwordRegistration.grid(row=3 , column=1 , sticky="nw" ,padx=(100,0) , pady=(0,400))
+        self.passwordRegistration = tk.Entry(self.tab1 , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
+        self.passwordRegistration.grid(row=4 , column=2 , columnspan=2 , pady=(0,10))
 
         self.emailTitle = tk.Label(self.tab1 ,  text="Email" , font="Inter 10" , foreground="white" , background="#121528")
-        self.emailTitle.grid(row=2 , column=3 , sticky="sw")
+        self.emailTitle.grid(row=5 , column=2 ,  columnspan=2 )
 
-        self.emailRegistration = tk.Entry(self.tab1 , width=35 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
-        self.emailRegistration.grid(row = 3 , column=3 , sticky="nw" , padx=(0,50))
+        self.emailRegistration = tk.Entry(self.tab1 , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
+        self.emailRegistration.grid(row = 6 , column=2 ,  columnspan=2 , pady=(0,10))
 
         self.prductTitle = tk.Label(self.tab1 ,  text="Service" , font="Inter 10" , foreground="white" , background="#121528")
-        self.prductTitle.grid(row = 1 , column=3 , sticky="sw")
+        self.prductTitle.grid(row = 7 , column=2 ,  columnspan=2)
 
-        self.productRegistration = tk.Entry(self.tab1 , width=35 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
-        self.productRegistration.grid(row = 2 , column=3 , sticky="nw")
+        self.productRegistration = tk.Entry(self.tab1 , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
+        self.productRegistration.grid(row = 8 , column=2 , columnspan=2 , pady=(0,10))
 
+        self.buttonAdd = tk.Button(self.tab1 , text="Add Credential" , bg="#0787FF" , takefocus=0 , width=22 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0)
+        self.buttonAdd.grid(row=9 , column=2 , columnspan=2 , pady=(20,0))
 
 
 
