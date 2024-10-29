@@ -1,7 +1,7 @@
 
 import mysql.connector 
 from mysql.connector import Error
-import pymysql
+
 
 
 class userManagement():
@@ -9,8 +9,8 @@ class userManagement():
     def connection(self):
         return mysql.connector.connect(
             host = "localhost" , 
-            user = "rootALEX" , 
-            password = "root2234A03",
+            user = "rootAlex" , 
+            password = "root2003A03",
             database = "credentials_management"
             #auth_plugin='mysql_native_password'
         )

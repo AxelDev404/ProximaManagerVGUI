@@ -21,9 +21,9 @@ class MainWindow:
 
     def __init__(self , root) :
 
-        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
-        img_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'img', 'account-protection.png')
-        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
+        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
+        img_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'img', 'account-protection.png')
+        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
 
         ctypes.windll.gdi32.AddFontResourceW(font_path)
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
@@ -62,7 +62,7 @@ class MainWindow:
         self.secondaryTitleMainFrame2 = ttk.Label(self.MainFrame2 , text="Manager" , font=customFontTitle2 , background="#050617" , foreground="white")
         self.secondaryTitleMainFrame2.place(x=130 , y= 100)
 
-        img2 = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/account-protection.png"
+        img2 = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/account-protection.png"
         self.imageOpen2 = Image.open(img2).resize((240,240))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
 
@@ -77,7 +77,7 @@ class MainWindow:
         self.buttonRegister = tk.Button(self.MainFrame , text="Sign Up" , bg="#0787FF" , takefocus=0 , width=16 , height=3 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.registerPage , cursor="hand2")
         self.buttonRegister.place(x=100 , y=350)
 
-        img = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/login-.png"
+        img = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/login-.png"
 
         self.imageOpen = Image.open(img).resize((50,50))
         self.ImageUp = ImageTk.PhotoImage(self.imageOpen)

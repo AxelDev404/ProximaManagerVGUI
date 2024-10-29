@@ -12,14 +12,17 @@ from PIL import Image, ImageTk
 
 import os
 
+import mysql.connector 
+from mysql.connector import Error
+
 from logic.db_user_manager import userManagement
 
 
 class DashBoard:
     def __init__(self , root , usernameLOGIN , passwordLOGIN):
 
-        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
-        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
+        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
+        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
 
         ctypes.windll.gdi32.AddFontResourceW(font_path)
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
@@ -68,11 +71,14 @@ class DashBoard:
         #self.tab1.grid_rowconfigure(0, weight=1)
 
         self.tab2 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
+
+        self.tab2 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
+
         self.tab3 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
         self.tab4 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
         self.tab5 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
 
-        for tab in [self.tab1, self.tab2, self.tab3, self.tab4, self.tab5]:
+        for tab in [self.tab1 ,self.tab3, self.tab4, self.tab5]:
             tab.grid_rowconfigure(0, weight=0)  # Permette l'espansione della colonna
             tab.grid_rowconfigure(1, weight=0) #tolgo l espansione con lo 0   
             tab.grid_rowconfigure(2, weight=0) 
@@ -90,9 +96,13 @@ class DashBoard:
             tab.grid_columnconfigure(3, weight=1)   
             tab.grid_columnconfigure(4, weight=1)  
 
+        self.tab2.grid_rowconfigure(0,weight=1)
+        self.tab2.grid_rowconfigure(1,weight=1)
+        self.tab2.grid_columnconfigure(0,weight=1)
+
         
 
-        self.labelTab1 = tk.Label(self.tab1, text="TEST TAB 2")
+        #self.labelTab1 = tk.Label(self.tab1, text="TEST TAB 2")
         self.labelTab2 = tk.Label(self.tab2, text="TEST TAB 2")
         self.labelTab3 = tk.Label(self.tab3, text="TEST TAB 3")
         self.labelTab4 = tk.Label(self.tab4, text="TEST TAB 4")
@@ -138,8 +148,46 @@ class DashBoard:
         self.buttonAdd.grid(row=9 , column=2 , columnspan=2 , pady=(20,0))
 
 
+        #VIEW ALL CREDENTIALS TAB#
+
+        db = self.db_connect()
+        cursor = db.cursor()
+        
+        sqlQuery = "SELECT id_credential , username , pwd, email , product FROM credentials"
+        cursor.execute(sqlQuery)
+        rows = cursor.fetchall()
+
+        #self.ListCredentials = tk.Listbox(self.tab2, background="#1D2447" , borderwidth=0, border=0, height=600, font="Inter 12" , foreground="white")
+        #self.ListCredentials.grid(row = 1 , column= 0 , sticky="sew" , pady=(100,30) , padx=(30,0))
+
+        #self.scrollBar = tk.Scrollbar(self.tab2 , orient=VERTICAL)
+        #self.scrollBar.grid(row=1 , column=1 , sticky="ns" ,pady=(100,30) , padx=(0,30))
+
+        #column_labels = ["ID" , "USERNAME" , "PASSWORD" , "EMAIL" , "SERVICE"]
+
+        self.tree = ttk.Treeview(self.tab2 , column=("ID" , "USERNAME" , "PASSWORD" , "EMAIL" , "SERVICE") , show='headings')
+        
+        self.tree.column("#1", anchor=tk.CENTER)
+        self.tree.heading("#1" , text="ID")
+        self.tree.column("#2" , anchor=tk.CENTER)
+        self.tree.heading("#2" , text="USERNAME")
+        self.tree.column("#3", anchor=tk.CENTER)
+        self.tree.heading("#3" , text="PASSWORD")
+        self.tree.column("#4" , anchor=tk.CENTER)
+        self.tree.heading("#4" , text="EMAIL")
+        self.tree.column("#5", anchor=tk.CENTER)
+        self.tree.heading("#5" , text="SERVICE")
 
 
+
+        self.tree.grid(row=0 , column=0 , sticky="nsew" , pady=(30,0) , padx=(20,0))
+
+        self.sby = ttk.Scrollbar(self.tab2 , orient=tk.VERTICAL , command=self.tree.yview)
+        self.tree.configure(yscrollcommand=self.sby.set)
+        self.sby.grid(row = 0, column=1, sticky="ns" ,padx=(0,20) , pady=(30,0))
+
+        for row in rows:
+            self.tree.insert("",tk.END , values=row)
 
 
 
@@ -174,7 +222,7 @@ class DashBoard:
         self.AreaPersonal = tk.Frame(self.MenuFrame , width=300 , background="#111735" , height=300)
         self.AreaPersonal.pack(fill="x", side="bottom" )
 
-        img2 = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/logout.png"
+        img2 = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/logout.png"
         self.imageOpen2 = Image.open(img2).resize((42,42))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
         self.label2 = self.imageSecurty
@@ -190,7 +238,7 @@ class DashBoard:
         self.userNameProfile.pack(side="left")
 
 
-        imgSettings = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/settings.png"
+        imgSettings = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/settings.png"
         self.imageOpen2 = Image.open(imgSettings).resize((40,40))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
         self.labelSettings = self.imageSecurty
@@ -215,6 +263,15 @@ class DashBoard:
             Widget.grid_forget()
         
         tab_frame.grid(sticky="nsew")
+
+
+    def db_connect(self):
+        return mysql.connector.connect(
+            host = "localhost",
+            user = "rootAlex",
+            password = "root2003A03",
+            database = "credentials_management"
+        )
     
 
     def on_hover(self, e):
