@@ -3,10 +3,31 @@ GUI version of ProximaManager
 
 LogIn Pannel : 
 
-![proximaLogIn](https://github.com/user-attachments/assets/785978ea-ac9a-447d-b68c-c3bff1d5c06b)
+![logInProximaManager](https://github.com/user-attachments/assets/6253b1af-1bad-4090-9e61-5444db73cfe7)
+
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
 Sing Up Pannel : 
 
-![proximaSingUp](https://github.com/user-attachments/assets/6cc2b3c8-31e6-4a86-857e-3a40aab20126)
+![SingUpProximaManager](https://github.com/user-attachments/assets/df0aee23-a500-45d5-a6e4-b229483e31fa)
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Dashboard : 
+
+![DashBoardProximaManager](https://github.com/user-attachments/assets/c08f6d65-82ef-4b24-943d-7281988d4cda)
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+View all credentials : 
+
+![DashBoardProximaManager](https://github.com/user-attachments/assets/15a94797-ce37-417f-a7b7-24a3c67cd3b8)
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Filter search :
+
+![FilterProxima](https://github.com/user-attachments/assets/78f3c4b2-114c-4492-8ac3-d34a28c03029)
