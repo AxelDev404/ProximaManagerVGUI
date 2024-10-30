@@ -22,7 +22,7 @@ Dashboard :
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
-View all credentials : 
+Add credentials : 
 
 ![DashBoardProximaManager](https://github.com/user-attachments/assets/15a94797-ce37-417f-a7b7-24a3c67cd3b8)
 
@@ -31,3 +31,9 @@ View all credentials :
 Filter search :
 
 ![FilterProxima](https://github.com/user-attachments/assets/78f3c4b2-114c-4492-8ac3-d34a28c03029)
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+View all credentials :
+
+![ViewAllProxima](https://github.com/user-attachments/assets/3a8e433d-8ddc-4bb7-8200-88a35fd7a24e)
