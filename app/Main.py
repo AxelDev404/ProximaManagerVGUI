@@ -9,7 +9,7 @@ def main():
     
     main = MainWindow(root)
     root.mainloop() # start the loop 
-    
+
 
 if __name__ == "__main__":
  main()

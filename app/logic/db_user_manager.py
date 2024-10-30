@@ -9,8 +9,8 @@ class userManagement():
     def connection(self):
         return mysql.connector.connect(
             host = "localhost" , 
-            user = "rootAlex" , 
-            password = "root2003A03",
+            user = "rootALEX" , 
+            password = "root2234A03",
             database = "credentials_management"
             #auth_plugin='mysql_native_password'
         )
@@ -49,5 +49,21 @@ class userManagement():
         if usr : 
             userN = usr[0]
             return userN
-    
         
+    def getIdUser(self , username , password):
+
+        db = self.connection()
+        cursor = db.cursor()
+
+        sqlQuery = "SELECT id_user FROM user WHERE username = %s AND pwd = %s"
+        cursor.execute(sqlQuery ,(username , password))
+    
+        usr = cursor.fetchall()
+        cursor.close()
+        db.close()
+
+        if usr:
+            userId = usr[0]
+            return userId
+        else:
+            print("Failed LogIn")

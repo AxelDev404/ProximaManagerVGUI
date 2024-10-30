@@ -16,19 +16,25 @@ import mysql.connector
 from mysql.connector import Error
 
 from logic.db_user_manager import userManagement
+from logic.db_credentials_manager import credentialsManagement
 
 
 class DashBoard:
     def __init__(self , root , usernameLOGIN , passwordLOGIN):
 
-        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
-        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
+        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
+        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
 
         ctypes.windll.gdi32.AddFontResourceW(font_path)
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
 
         customFontSingIn = tkFont.Font(family = "Tech Noir" , size=21)
         customFontRegister = tkFont.Font(family = "Tech Noir" , size=14)
+
+        #CONSTRUCTORS
+
+        usrManager = userManagement()
+        crdManager = credentialsManagement()
 
         self.root = root
         self.root  = root #test private after
@@ -42,33 +48,22 @@ class DashBoard:
         self.root.grid_columnconfigure(1, weight=1)  # Colonna 1 (contenuto) si espande
         self.root.grid_rowconfigure(0, weight=1)     # Riga 0 si espande verticalmente
 
-
         style = ttk.Style()
         style.theme_use("clam")
         style.configure("MenuFarme.TFrame" , background = "#1B1A36")
         style.configure("MainFrame.TFrame" , background = "#121528")
+        style.configure("mystyle.Treeview.Heading" , font=("Inter" , 10) , background = "#1D2447" , foreground="white" , fieldbackground="lightgray")
 
-        
         self.MenuFrame = ttk.Frame(self.root , style="MenuFarme.TFrame" , width=300 , height=700)
         self.MenuFrame.grid(row=0, column=0, sticky="ns")
         self.MenuFrame.grid_propagate(False)       
-        #self.MenuFrame.pack(fill="y" , side=LEFT)
-        #self.MenuFrame.pack_propagate(False) # blocco estensione del menu
 
         self.MainFrame = ttk.Frame(self.root , style="MainFrame.TFrame" , width=1500 , height=700)
-        #self.MainFrame.pack(fill=BOTH , expand=True , side=LEFT)
         self.MainFrame.grid(row=0, column=1, sticky="nsew")
-        
         self.MainFrame.grid_columnconfigure(0, weight=1)
         self.MainFrame.grid_rowconfigure(0, weight=1)
 
-
         self.tab1 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
-        #self.tab1.pack(fill=BOTH , expand=True)
-
-
-        #self.tab1.grid_columnconfigure(0, weight=1)
-        #self.tab1.grid_rowconfigure(0, weight=1)
 
         self.tab2 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
 
@@ -78,7 +73,7 @@ class DashBoard:
         self.tab4 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
         self.tab5 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
 
-        for tab in [self.tab1 ,self.tab3, self.tab4, self.tab5]:
+        for tab in [self.tab1 ,self.tab4, self.tab5]:
             tab.grid_rowconfigure(0, weight=0)  # Permette l'espansione della colonna
             tab.grid_rowconfigure(1, weight=0) #tolgo l espansione con lo 0   
             tab.grid_rowconfigure(2, weight=0) 
@@ -100,21 +95,20 @@ class DashBoard:
         self.tab2.grid_rowconfigure(1,weight=1)
         self.tab2.grid_columnconfigure(0,weight=1)
 
-        
+        self.tab3.grid_rowconfigure(0,weight=1)
+        self.tab3.grid_rowconfigure(1,weight=1)
+        self.tab3.grid_rowconfigure(2,weight=1)
+        self.tab3.grid_columnconfigure(0,weight=1)
 
-        #self.labelTab1 = tk.Label(self.tab1, text="TEST TAB 2")
-        self.labelTab2 = tk.Label(self.tab2, text="TEST TAB 2")
+        
         self.labelTab3 = tk.Label(self.tab3, text="TEST TAB 3")
         self.labelTab4 = tk.Label(self.tab4, text="TEST TAB 4")
         self.labelTab5 = tk.Label(self.tab5, text="TEST TAB 5")
-        
 
-        #self.labelTab2.grid(row=0, column=0, sticky="nsew")  # Centro
-        #self.labelTab3.grid(row=0, column=0, sticky="nsew")  # Centro
-        #self.labelTab4.grid(row=0, column=0, sticky="nsew")  # Centro
-        #self.labelTab5.grid(row=0, column=0, sticky="nsew")  # Centro
 
         #ADD CREDENTIAL TAB#
+
+
 
         self.Title =tk.Label(self.tab1 , text="Add Credentials" , font="Inter 13" , foreground="white" , background="#121528")
         self.Title.grid(row = 0 , column = 2, columnspan=2 , sticky="n" , pady=80)
@@ -124,48 +118,34 @@ class DashBoard:
 
         #self.showTab(self.tab1)
         self.usernameRegistration = tk.Entry(self.tab1 , width=42 , border=1 , bg="white" , foreground="black" , font=("Inter" , 11))
-        self.usernameRegistration.grid(row=2 , column=2 ,  columnspan=2 , pady=(0,10))
+        self.usernameRegistration.grid(row=2 , column=2 ,  columnspan=2 , pady=(0,10) , ipadx=30, ipady=7)
 
         self.passwordTitle =  tk.Label(self.tab1 , text="Password" , font="Inter 10" , foreground="white" , background="#121528")
         self.passwordTitle.grid(row=3 , column=2 , columnspan=2)
 
         self.passwordRegistration = tk.Entry(self.tab1 , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
-        self.passwordRegistration.grid(row=4 , column=2 , columnspan=2 , pady=(0,10))
+        self.passwordRegistration.grid(row=4 , column=2 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
 
         self.emailTitle = tk.Label(self.tab1 ,  text="Email" , font="Inter 10" , foreground="white" , background="#121528")
         self.emailTitle.grid(row=5 , column=2 ,  columnspan=2 )
 
         self.emailRegistration = tk.Entry(self.tab1 , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
-        self.emailRegistration.grid(row = 6 , column=2 ,  columnspan=2 , pady=(0,10))
+        self.emailRegistration.grid(row = 6 , column=2 ,  columnspan=2 , pady=(0,10) , ipadx=30, ipady=7)
 
         self.prductTitle = tk.Label(self.tab1 ,  text="Service" , font="Inter 10" , foreground="white" , background="#121528")
         self.prductTitle.grid(row = 7 , column=2 ,  columnspan=2)
 
         self.productRegistration = tk.Entry(self.tab1 , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
-        self.productRegistration.grid(row = 8 , column=2 , columnspan=2 , pady=(0,10))
+        self.productRegistration.grid(row = 8 , column=2 , columnspan=2 , pady=(0,10) , ipadx=30, ipady=7)
 
-        self.buttonAdd = tk.Button(self.tab1 , text="Add Credential" , bg="#0787FF" , takefocus=0 , width=22 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0)
+        self.buttonAdd = tk.Button(self.tab1 , text="Add Credential" , bg="#0787FF" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0)
         self.buttonAdd.grid(row=9 , column=2 , columnspan=2 , pady=(20,0))
 
 
         #VIEW ALL CREDENTIALS TAB#
 
-        db = self.db_connect()
-        cursor = db.cursor()
-        
-        sqlQuery = "SELECT id_credential , username , pwd, email , product FROM credentials"
-        cursor.execute(sqlQuery)
-        rows = cursor.fetchall()
-
-        #self.ListCredentials = tk.Listbox(self.tab2, background="#1D2447" , borderwidth=0, border=0, height=600, font="Inter 12" , foreground="white")
-        #self.ListCredentials.grid(row = 1 , column= 0 , sticky="sew" , pady=(100,30) , padx=(30,0))
-
-        #self.scrollBar = tk.Scrollbar(self.tab2 , orient=VERTICAL)
-        #self.scrollBar.grid(row=1 , column=1 , sticky="ns" ,pady=(100,30) , padx=(0,30))
-
-        #column_labels = ["ID" , "USERNAME" , "PASSWORD" , "EMAIL" , "SERVICE"]
-
         self.tree = ttk.Treeview(self.tab2 , column=("ID" , "USERNAME" , "PASSWORD" , "EMAIL" , "SERVICE") , show='headings')
+        
         
         self.tree.column("#1", anchor=tk.CENTER)
         self.tree.heading("#1" , text="ID")
@@ -178,18 +158,32 @@ class DashBoard:
         self.tree.column("#5", anchor=tk.CENTER)
         self.tree.heading("#5" , text="SERVICE")
 
-
-
         self.tree.grid(row=0 , column=0 , sticky="nsew" , pady=(30,0) , padx=(20,0))
-
         self.sby = ttk.Scrollbar(self.tab2 , orient=tk.VERTICAL , command=self.tree.yview)
         self.tree.configure(yscrollcommand=self.sby.set)
         self.sby.grid(row = 0, column=1, sticky="ns" ,padx=(0,20) , pady=(30,0))
 
-        for row in rows:
+        idUser = usrManager.getIdUser(usernameLOGIN , passwordLOGIN)
+        row2 = crdManager.viewAllCredentials(idUser)
+
+        for row in row2:
             self.tree.insert("",tk.END , values=row)
 
+       #FILTER SEARCH TAB
+       #, ipadx=40, ipady=7  [x] lunghezza [y] altezza
 
+        self.EntryFilterSearch = tk.Entry(self.tab3 , width=34 , font=("Inter" , 10) , background="white" , foreground="black")
+        self.EntryFilterSearch.grid(row=0 , column=0 , sticky="n" , pady=(100,0) , ipadx=40, ipady=7)
+
+        self.optionVariable = StringVar()
+        self.optionVariable.set("Filters")
+
+        self.optionList = ['ID CREDENTIAL' , 'USERNAME' , 'EMAIL' , 'PRODUCT']
+
+
+        self.openMenuChoose = tk.OptionMenu(self.tab3 , self.optionVariable , * self.optionList)
+        self.openMenuChoose.config(border=0 , relief="solid")
+        self.openMenuChoose.grid(row=0 , column=0, sticky="n" ,padx=(450,0), pady=(100,0) , ipady=3)
 
 
         self.Title = tk.Label(self.MenuFrame , text="Proxima Manger" , font=customFontSingIn , background="#1B1A36" , foreground="white")
@@ -222,7 +216,7 @@ class DashBoard:
         self.AreaPersonal = tk.Frame(self.MenuFrame , width=300 , background="#111735" , height=300)
         self.AreaPersonal.pack(fill="x", side="bottom" )
 
-        img2 = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/logout.png"
+        img2 = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/logout.png"
         self.imageOpen2 = Image.open(img2).resize((42,42))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
         self.label2 = self.imageSecurty
@@ -230,7 +224,7 @@ class DashBoard:
         self.buttonQuit = tk.Button(self.AreaPersonal , image=self.label2 , background="#111735" , border=0 , padx=5 , pady=5 , activebackground="#111735" , cursor="hand2" , command=self.logOut)
         self.buttonQuit.pack(side="left" , padx=10 , pady=10)
 
-        usrManager = userManagement()
+        
 
         self.userNameToShow=usrManager.getUsernameProfile(usernameLOGIN , passwordLOGIN)
         #ciao = "ciao"
@@ -238,7 +232,7 @@ class DashBoard:
         self.userNameProfile.pack(side="left")
 
 
-        imgSettings = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/settings.png"
+        imgSettings = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/settings.png"
         self.imageOpen2 = Image.open(imgSettings).resize((40,40))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
         self.labelSettings = self.imageSecurty
@@ -268,8 +262,8 @@ class DashBoard:
     def db_connect(self):
         return mysql.connector.connect(
             host = "localhost",
-            user = "rootAlex",
-            password = "root2003A03",
+            user = "rootALEX",
+            password = "root2234A03", #CHANGE
             database = "credentials_management"
         )
     
