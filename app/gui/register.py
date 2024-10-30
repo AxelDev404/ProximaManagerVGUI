@@ -11,12 +11,14 @@ import ctypes
 from PIL import Image, ImageTk  
 
 import os
+from logic.User.db_user_manager import userManagement 
+from logic.User.User import User
 
 class Register:
     
     def __init__(self, root):
-        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
-        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
+        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
+        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
         ctypes.windll.gdi32.AddFontResourceW(font_path)
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
 
@@ -64,7 +66,7 @@ class Register:
         self.Slogan5MainFrame2.place(x=310 , y=150)
 
 
-        img1 = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/account-protection.png"   
+        img1 = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/account-protection.png"   
         self.imageOpen1 = Image.open(img1).resize((500,500))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen1)
 
@@ -73,39 +75,74 @@ class Register:
         self.lockSec.image = self.imageSecurty #self.lockSec.image per fare riferimento all ogetto dell immagine quando ci troviamo in altre pagine di routing
 
 
+        self.inputVarUsername = tk.StringVar()
+        self.inputVarPassword = tk.StringVar()
+        self.inputVarEmail = tk.StringVar()
+        self.inputVarName = tk.StringVar()
+        self.inputVarPhone = tk.StringVar()
+
+        self.inputVarUsername.set("")
+        self.inputVarPassword.set("")
+        self.inputVarEmail.set("")
+        self.inputVarName.set("")
+        self.inputVarPhone.set("")
+
         self.usernameText = ttk.Label(self.MainFrame , text="Username" , font="Helvetica 11 " , foreground="#0787FF" , background="#070A1C")
         self.usernameText.place(x=140, y=170)
-        self.usernameSingUp = tk.Entry(self.MainFrame , width=41 , font=("Arial" , 11) , takefocus=0 , borderwidth=1 ,bg="white" , foreground="black")
+        self.usernameSingUp = tk.Entry(self.MainFrame, textvariable=self.inputVarUsername , width=41 , font=("Arial" , 11) , takefocus=0 , borderwidth=1 ,bg="white" , foreground="black")
         self.usernameSingUp.place(x=140, y=200 , height=35)
 
 
         self.passwordText = ttk.Label(self.MainFrame , text="Password" , font="Helvetica 11 " , foreground="#0787FF" , background="#070A1C")
         self.passwordText.place(x=140, y=250)
-        self.passwordInput = tk.Entry(self.MainFrame ,  width=41 , font=("Arial" , 11) , takefocus=0 , borderwidth=1 ,bg="white" , foreground="black")
+        self.passwordInput = tk.Entry(self.MainFrame, textvariable=self.inputVarPassword ,  width=41 , font=("Arial" , 11) , takefocus=0 , borderwidth=1 ,bg="white" , foreground="black")
         self.passwordInput.place(x=140, y=280 , height=35)
 
 
         self.emailText = ttk.Label(self.MainFrame , text="Email" , font="Helvetica 11 " , foreground="#0787FF" , background="#070A1C")
         self.emailText.place(x=140, y=330)
-        self.emailInput = tk.Entry(self.MainFrame ,  width=41 , font=("Arial" , 11) , takefocus=0 , borderwidth=1 ,bg="white" , foreground="black")
+        self.emailInput = tk.Entry(self.MainFrame, textvariable=self.inputVarEmail ,  width=41 , font=("Arial" , 11) , takefocus=0 , borderwidth=1 ,bg="white" , foreground="black")
         self.emailInput.place(x=140, y=360 , height=35)
 
 
         self.nameText = ttk.Label(self.MainFrame , text="Name" , font="Helvetica 11 " , foreground="#0787FF" , background="#070A1C")
         self.nameText.place(x=140, y=410)
-        self.nameTextInput = tk.Entry(self.MainFrame ,  width=41 , font=("Arial" , 11) , takefocus=0 , borderwidth=1 ,bg="white" , foreground="black")
+        self.nameTextInput = tk.Entry(self.MainFrame, textvariable=self.inputVarName ,  width=41 , font=("Arial" , 11) , takefocus=0 , borderwidth=1 ,bg="white" , foreground="black")
         self.nameTextInput.place(x=140, y=440 , height=35)
 
 
         self.phoneText = ttk.Label(self.MainFrame , text="Phone Number" , font="Helvetica 11 " , foreground="#0787FF" , background="#070A1C")
         self.phoneText.place(x=140, y=490)
-        self.phoneTextInput = tk.Entry(self.MainFrame ,  width=41 , font=("Arial" , 11) , takefocus=0 , borderwidth=1 ,bg="white" , foreground="black")
+        self.phoneTextInput = tk.Entry(self.MainFrame, textvariable=self.inputVarPhone ,  width=41 , font=("Arial" , 11) , takefocus=0 , borderwidth=1 ,bg="white" , foreground="black")
         self.phoneTextInput.place(x=140, y=520 , height=35)
 
 
-        self.buttonRegister = tk.Button(self.MainFrame , text="Sign Up" , bg="#0787FF" , takefocus=0 , width=25 , height=3 , foreground="white" , font=customFontRegister , borderwidth=0)
+        self.buttonRegister = tk.Button(self.MainFrame , text="Sign Up" , bg="#0787FF" , takefocus=0 , width=25 , height=3 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.signIn)
         self.buttonRegister.place(x=140 , y=590)
 
+    
+    def signIn(self):
         
+        username = self.usernameSingUp.get().strip()
+        password = self.passwordInput.get().strip()
+        email = self.emailInput.get().strip()
+        name = self.nameTextInput.get().strip()
+        number_phone = self.phoneTextInput.get().strip()
+
+        
+        usrManger = userManagement()
+        usr = User(username , password , name , email , number_phone)
+        
+
+        if usrManger.checkExistanceUserinDb(username , email):
+            print("DEBUG : false")
+        else:
+            from gui.main_window import MainWindow
+            usrManger.signIn(usr)
+
+            self.root.destroy()
+            goLogIn = tk.Tk()
+            quit =  MainWindow(goLogIn)
+
 
 

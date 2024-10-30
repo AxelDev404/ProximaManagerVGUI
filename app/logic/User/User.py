@@ -20,15 +20,15 @@ class User:
     
     @property 
     def nome(self):
-        self.__nome
+       return self.__nome
     
     @property
     def email(self):
-        self.__email
+       return self.__email
     
     @property
     def number_phone(self):
-        self.__number_phone
+       return  self.__number_phone
 
 
 

@@ -1,7 +1,7 @@
 
 import mysql.connector 
 from mysql.connector import Error
-
+from tkinter import messagebox
 
 
 class userManagement():
@@ -9,8 +9,8 @@ class userManagement():
     def connection(self):
         return mysql.connector.connect(
             host = "localhost" , 
-            user = "rootAlex" , 
-            password = "root2003A03",
+            user = "rootALEX" , 
+            password = "root2234A03",
             database = "credentials_management"
             #auth_plugin='mysql_native_password'
         )
@@ -69,4 +69,39 @@ class userManagement():
             print("Failed LogIn")
 
     def signIn (self, user):
-        print()
+        values = (user.nome , user.username , user.pwd , user.email , user.number_phone )
+
+        db = self.connection()
+        cursor = db.cursor()
+
+        sqlQuery = "INSERT INTO user (nome , username , pwd , email , number_phone) VALUES (%s,%s,%s,%s,%s)"
+        cursor.execute(sqlQuery , values)
+
+        db.commit()
+
+        cursor.close()
+        db.close()
+
+    
+    def checkExistanceUserinDb(self , username , email):
+        controllExistance = False
+
+        db = self.connection()
+        cursor = db.cursor()
+
+        sqlQuery = "SELECT username , email FROM user WHERE username = %s OR email = %s"
+        cursor.execute(sqlQuery , (username,email))
+
+        usr = cursor.fetchone()
+        cursor.close()
+        db.close()
+
+        messagebox.showinfo("Registration is complete")
+
+        if usr:
+            controllExistance = True
+            messagebox.showerror("Can't create the accout because the email is alredy in use")
+            return controllExistance
+        else:
+            controllExistance = False
+            return controllExistance

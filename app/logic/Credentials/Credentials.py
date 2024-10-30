@@ -14,16 +14,16 @@ class Credential:
         return self.__pwd
     
     @property
-    def unsername(self):
-        self.__username
+    def username(self):
+        return self.__username
 
     @property
     def email(self):
-        self.__email
+       return self.__email
 
     @property
     def product(self):
-        self.__product
+       return self.__product
 
 
     @pwd.setter
@@ -33,11 +33,9 @@ class Credential:
         else:
             self.__pwd = pwd
 
-    @unsername.setter
+    @username.setter
     def username(self, username):
-        if username == "":
             print("DEBUG : username can be added leater")
-        else:
             self.__username = username
     
     @email.setter
@@ -51,3 +49,5 @@ class Credential:
     def product(self , product):
         if product == "":
             print("DEBUG : Invalid product")
+        else:
+            self.__product = product

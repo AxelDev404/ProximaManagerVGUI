@@ -9,8 +9,8 @@ class credentialsManagement():
     def db_connect(self):
         return mysql.connector.connect(
             host = "localhost",
-            user = "rootAlex",
-            password = "root2003A03",
+            user = "rootALEX",
+            password = "root2234A03",
             database = "credentials_management"
         )
 
@@ -108,14 +108,20 @@ class credentialsManagement():
     def addCredentials(self , crd , idUser):
         
         values = (idUser , crd.username , crd.pwd , crd.email , crd.product)
-
+        print(f"Debug: Stai per inserire i valori: {values}")
+        
         db = self.db_connect()
         cursor = db.cursor()
 
         sqlQuery = "INSERT INTO credentials (id_user_credentials , username , pwd , email , product) VALUES (%s , %s , %s , %s , %s)"
-        cursor.execute(sqlQuery , (values))
+        cursor.execute(sqlQuery , values)
+
+        idCredential = cursor.lastrowid
+
 
         db.commit()
-
+        print("Dati inseriti nel database:", values)
         cursor.close()
         db.close()
+
+        return idCredential

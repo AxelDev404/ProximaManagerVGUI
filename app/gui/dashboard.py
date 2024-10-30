@@ -24,8 +24,8 @@ from logic.Credentials.Credentials import Credential
 class DashBoard:
     def __init__(self , root , usernameLOGIN , passwordLOGIN):
 
-        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
-        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
+        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
+        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
 
         ctypes.windll.gdi32.AddFontResourceW(font_path)
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
@@ -108,6 +108,19 @@ class DashBoard:
 
         #ADD CREDENTIAL TAB#
 
+# Inizializza le StringVar
+        self.inputVarUsername = tk.StringVar()
+        self.inputVarPassword = tk.StringVar()
+        self.inputVarEmail = tk.StringVar()
+        self.inputVarProduct = tk.StringVar()
+
+        # Imposta i valori iniziali (opzionale)
+        self.inputVarUsername.set("")
+        self.inputVarPassword.set("")
+        self.inputVarEmail.set("")
+        self.inputVarProduct.set("")
+
+
         self.Title =tk.Label(self.tab1 , text="Add Credentials" , font="Inter 13" , foreground="white" , background="#121528")
         self.Title.grid(row = 0 , column = 2, columnspan=2 , sticky="n" , pady=80)
 
@@ -115,29 +128,30 @@ class DashBoard:
         self.usernameTitle.grid(row=1 , column=2 , columnspan=2)
 
         #self.showTab(self.tab1)
-        self.usernameRegistration = tk.Entry(self.tab1 , width=42 , border=1 , bg="white" , foreground="black" , font=("Inter" , 11))
+        self.usernameRegistration = tk.Entry(self.tab1, textvariable=self.inputVarUsername , width=42 , border=1 , bg="white" , foreground="black" , font=("Inter" , 11))
         self.usernameRegistration.grid(row=2 , column=2 ,  columnspan=2 , pady=(0,10) , ipadx=30, ipady=7)
 
         self.passwordTitle =  tk.Label(self.tab1 , text="Password" , font="Inter 10" , foreground="white" , background="#121528")
         self.passwordTitle.grid(row=3 , column=2 , columnspan=2)
 
-        self.passwordRegistration = tk.Entry(self.tab1 , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
+        self.passwordRegistration = tk.Entry(self.tab1, textvariable=self.inputVarPassword , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
         self.passwordRegistration.grid(row=4 , column=2 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
 
         self.emailTitle = tk.Label(self.tab1 ,  text="Email" , font="Inter 10" , foreground="white" , background="#121528")
         self.emailTitle.grid(row=5 , column=2 ,  columnspan=2 )
 
-        self.emailRegistration = tk.Entry(self.tab1 , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
+        self.emailRegistration = tk.Entry(self.tab1, textvariable=self.inputVarEmail , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
         self.emailRegistration.grid(row = 6 , column=2 ,  columnspan=2 , pady=(0,10) , ipadx=30, ipady=7)
 
-        self.prductTitle = tk.Label(self.tab1 ,  text="Service" , font="Inter 10" , foreground="white" , background="#121528")
-        self.prductTitle.grid(row = 7 , column=2 ,  columnspan=2)
+        self.productTitle = tk.Label(self.tab1 ,  text="Service" , font="Inter 10" , foreground="white" , background="#121528")
+        self.productTitle.grid(row = 7 , column=2 ,  columnspan=2)
 
-        self.productRegistration = tk.Entry(self.tab1 , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
+        self.productRegistration = tk.Entry(self.tab1, textvariable=self.inputVarProduct , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
         self.productRegistration.grid(row = 8 , column=2 , columnspan=2 , pady=(0,10) , ipadx=30, ipady=7)
 
         self.buttonAdd = tk.Button(self.tab1 , text="Add Credential" , bg="#0787FF" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.addCredential)
         self.buttonAdd.grid(row=9 , column=2 , columnspan=2 , pady=(20,0))
+
 
 
         #VIEW ALL CREDENTIALS TAB#
@@ -162,10 +176,15 @@ class DashBoard:
         self.sby.grid(row = 0, column=1, sticky="ns" ,padx=(0,20) , pady=(30,0))
 
         self.idUser = usrManager.getIdUser(usernameLOGIN , passwordLOGIN)
+        
+
         row2 = crdManager.viewAllCredentials(self.idUser)
 
-        for row in row2:
-            self.tree.insert("",tk.END , values=row)
+        if row2 is None:
+            print("DEBUG : no credentials founed for this user")
+        else:
+            for row in row2:
+                self.tree.insert("",tk.END , values=row)
 
 
 
@@ -186,7 +205,7 @@ class DashBoard:
         self.openMenuChoose.config(border=0)
         self.openMenuChoose.grid(row=1 , column=0, sticky="n" ,padx=(0,450), pady=(101,0) , ipady=3)
 
-        imgSearch = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/magnifying-glass.png"
+        imgSearch = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/magnifying-glass.png"
         self.imageOpen2 = Image.open(imgSearch).resize((30,30))
         self.imageSerch = ImageTk.PhotoImage(self.imageOpen2)
         self.labelSearch = self.imageSerch
@@ -246,7 +265,7 @@ class DashBoard:
         self.AreaPersonal = tk.Frame(self.MenuFrame , width=300 , background="#111735" , height=300)
         self.AreaPersonal.pack(fill="x", side="bottom" )
 
-        img2 = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/logout.png"
+        img2 = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/logout.png"
         self.imageOpen2 = Image.open(img2).resize((42,42))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
         self.label2 = self.imageSecurty
@@ -262,7 +281,7 @@ class DashBoard:
         self.userNameProfile.pack(side="left")
 
 
-        imgSettings = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/settings.png"
+        imgSettings = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/settings.png"
         self.imageOpen2 = Image.open(imgSettings).resize((40,40))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
         self.labelSettings = self.imageSecurty
@@ -338,7 +357,7 @@ class DashBoard:
                 self.tree2.insert("" , tk.END , values=credential)
             self.tree2.update_idletasks()
 
-        elif valueOfStringOption == "ID":
+        elif valueOfStringOption == "ID CREDENTIAL":
 
             rowCrd = crdManager.filterSearchID(id, valueOfStringEntry)
             self.tree2.delete(*self.tree2.get_children())
@@ -356,18 +375,33 @@ class DashBoard:
         
         id = self.idUser[0]
 
-        username = self.usernameRegistration.get()
-        password = self.passwordRegistration.get()
-        email = self.emailRegistration.get()
-        product = self.productRegistration.get()
+        username = self.inputVarUsername.get().strip() #.strip() controllo degli spazi vuoti
+        password = self.inputVarPassword.get().strip()
+        email = self.inputVarEmail.get().strip()
+        product = self.inputVarProduct.get().strip()
 
-        crd = Credential(username , password , email , product)
+        crd = Credential( password , username , email , product)
         crdManger = credentialsManagement()
 
-        crdManger.addCredentials(crd , id)
+        cred = crdManger.addCredentials(crd , id)
 
-        messagebox.showinfo("Credential was successfully added                     .")
+        credDetails = (cred,crd.username, crd.pwd, crd.email, crd.product) #pick dell utlimo ip della riga appena pushata
+
+        print("DEBUG : Tipo di credential:", type(cred))
+        print("DEBUG : Contenuto di credential:", cred)
+            
+        self.tree.insert("", tk.END , values=credDetails)
         self.tree.update_idletasks()
+
+        self.inputVarUsername.set("")
+        self.inputVarPassword.set("")
+        self.inputVarEmail.set("")
+        self.inputVarProduct.set("")
+        
+        messagebox.showinfo("Credential was successfully added                     .")
+
+
+ 
 
 
 
