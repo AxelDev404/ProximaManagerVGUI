@@ -97,7 +97,6 @@ class DashBoard:
 
         self.tab3.grid_rowconfigure(0,weight=1)
         self.tab3.grid_rowconfigure(1,weight=1)
-        self.tab3.grid_rowconfigure(2,weight=1)
         self.tab3.grid_columnconfigure(0,weight=1)
 
         
@@ -163,28 +162,60 @@ class DashBoard:
         self.tree.configure(yscrollcommand=self.sby.set)
         self.sby.grid(row = 0, column=1, sticky="ns" ,padx=(0,20) , pady=(30,0))
 
-        idUser = usrManager.getIdUser(usernameLOGIN , passwordLOGIN)
-        row2 = crdManager.viewAllCredentials(idUser)
+        self.idUser = usrManager.getIdUser(usernameLOGIN , passwordLOGIN)
+        row2 = crdManager.viewAllCredentials(self.idUser)
 
         for row in row2:
             self.tree.insert("",tk.END , values=row)
+
+
+
 
        #FILTER SEARCH TAB
        #, ipadx=40, ipady=7  [x] lunghezza [y] altezza
 
         self.EntryFilterSearch = tk.Entry(self.tab3 , width=34 , font=("Inter" , 10) , background="white" , foreground="black")
-        self.EntryFilterSearch.grid(row=0 , column=0 , sticky="n" , pady=(100,0) , ipadx=40, ipady=7)
+        self.EntryFilterSearch.grid(row=1 , column=0 , sticky="n" , pady=(100,0) , ipadx=40, ipady=7)
 
         self.optionVariable = StringVar()
         self.optionVariable.set("Filters")
 
-        self.optionList = ['ID CREDENTIAL' , 'USERNAME' , 'EMAIL' , 'PRODUCT']
+        self.optionList = ['ID CREDENTIAL' , 'USERNAME' , 'EMAIL' , 'SERVICE']
 
 
         self.openMenuChoose = tk.OptionMenu(self.tab3 , self.optionVariable , * self.optionList)
-        self.openMenuChoose.config(border=0 , relief="solid")
-        self.openMenuChoose.grid(row=0 , column=0, sticky="n" ,padx=(450,0), pady=(100,0) , ipady=3)
+        self.openMenuChoose.config(border=0)
+        self.openMenuChoose.grid(row=1 , column=0, sticky="n" ,padx=(0,450), pady=(101,0) , ipady=3)
 
+        imgSearch = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/magnifying-glass.png"
+        self.imageOpen2 = Image.open(imgSearch).resize((30,30))
+        self.imageSerch = ImageTk.PhotoImage(self.imageOpen2)
+        self.labelSearch = self.imageSerch
+
+        self.buttonSearch= tk.Button(self.tab3 , image=self.labelSearch , background="#121528" , border=0 , padx=5 , pady=5 , activebackground="#121528" , cursor="hand2" , command=self.startSeacrch)
+        self.buttonSearch.grid(row=1 , column=0 , sticky="n", pady=(101,0), padx=(380,0) )
+
+        
+
+        self.tree2 = ttk.Treeview(self.tab3 , column=("ID" , "USERNAME" , "PASSWORD" , "EMAIL" , "SERVICE") , show='headings')
+        
+        self.tree2.column("#1", anchor=tk.CENTER)
+        self.tree2.heading("#1" , text="ID")
+        self.tree2.column("#2" , anchor=tk.CENTER)
+        self.tree2.heading("#2" , text="USERNAME")
+        self.tree2.column("#3", anchor=tk.CENTER)
+        self.tree2.heading("#3" , text="PASSWORD")
+        self.tree2.column("#4" , anchor=tk.CENTER)
+        self.tree2.heading("#4" , text="EMAIL")
+        self.tree2.column("#5", anchor=tk.CENTER)
+        self.tree2.heading("#5" , text="SERVICE")
+
+        self.tree2.grid(row=0 , column=0 , sticky="nsew" , pady=(30,0) , padx=(20,0))
+        self.sby2 = ttk.Scrollbar(self.tab3 , orient=tk.VERTICAL , command=self.tree2.yview)
+        self.tree2.configure(yscrollcommand=self.sby2.set)
+        self.sby2.grid(row = 0, column=1, sticky="ns" ,padx=(0,20) , pady=(30,0))
+
+        
 
         self.Title = tk.Label(self.MenuFrame , text="Proxima Manger" , font=customFontSingIn , background="#1B1A36" , foreground="white")
         self.Title.pack(fill="x" , pady=40)
@@ -267,6 +298,30 @@ class DashBoard:
             database = "credentials_management"
         )
     
+
+    def filterSearchTest(self):
+        crdManager = credentialsManagement()
+        valueOfStringOption = self.optionVariable.get() #opzione
+        valueOfStringEntry = self.EntryFilterSearch.get() #product
+        id = self.idUser[0] #TUPLA ATTENZIONE NEL CASO ESTRARRE L IDICE NECESSARIO
+        #if self.valueOfStringOption == "SERVICE":
+        print(f"ID User: {id}, Service: {valueOfStringEntry}")
+        rowCrd = crdManager.filterSeacrhService(id , valueOfStringEntry)
+        
+
+        if valueOfStringOption == "SERVICE":    
+            
+            self.tree2.delete(*self.tree2.get_children())
+
+            for credential in rowCrd:
+                self.tree2.insert("", tk.END , values=credential)
+            self.tree2.update_idletasks()
+
+    
+    def startSeacrch(self):
+        self.filterSearchTest() 
+
+
 
     def on_hover(self, e):
         self.addCredentialsTab.config(background = "#121528")

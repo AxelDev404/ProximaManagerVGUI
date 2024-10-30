@@ -14,7 +14,7 @@ class userManagement():
             database = "credentials_management"
             #auth_plugin='mysql_native_password'
         )
-    
+
 
     def logIn(self , username , password):
 
@@ -56,7 +56,7 @@ class userManagement():
         cursor = db.cursor()
 
         sqlQuery = "SELECT id_user FROM user WHERE username = %s AND pwd = %s"
-        cursor.execute(sqlQuery ,(username , password))
+        cursor.execute(sqlQuery , (username , password))
     
         usr = cursor.fetchall()
         cursor.close()

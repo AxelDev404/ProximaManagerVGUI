@@ -32,4 +32,19 @@ class credentialsManagement():
             return user
         else:
             print("Fatal error to give the credentials")
-        
+
+    def filterSeacrhService(self, idUser , service):
+
+        db = self.db_connect()
+        cursor = db.cursor()
+
+        sqlQuery = "SELECT id_credential , username , pwd, email , product FROM credentials WHERE id_user_credentials = %s AND product = %s"
+        cursor.execute(sqlQuery, (idUser,service))
+
+        crd = cursor.fetchall()
+        cursor.close()
+        db.close()
+
+        return crd
+   
+        print("Fatal error to give credentials")
