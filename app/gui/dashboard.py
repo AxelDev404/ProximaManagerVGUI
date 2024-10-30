@@ -15,15 +15,17 @@ import os
 import mysql.connector 
 from mysql.connector import Error
 
-from logic.db_user_manager import userManagement
-from logic.db_credentials_manager import credentialsManagement
+from logic.User.db_user_manager import userManagement
+from logic.Credentials.db_credentials_manager import credentialsManagement
+from logic.Credentials.Credentials import Credential
+
 
 
 class DashBoard:
     def __init__(self , root , usernameLOGIN , passwordLOGIN):
 
-        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
-        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
+        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
+        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
 
         ctypes.windll.gdi32.AddFontResourceW(font_path)
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
@@ -43,7 +45,6 @@ class DashBoard:
         #self.resizable = tk.Tk.resizable(self.root, False , False)
         self.root.attributes('-topmost' , 0) 
         self.root.iconbitmap(icon_path)
-        #self.root.configure(background = "#121528")
 
         self.root.grid_columnconfigure(1, weight=1)  # Colonna 1 (contenuto) si espande
         self.root.grid_rowconfigure(0, weight=1)     # Riga 0 si espande verticalmente
@@ -107,8 +108,6 @@ class DashBoard:
 
         #ADD CREDENTIAL TAB#
 
-
-
         self.Title =tk.Label(self.tab1 , text="Add Credentials" , font="Inter 13" , foreground="white" , background="#121528")
         self.Title.grid(row = 0 , column = 2, columnspan=2 , sticky="n" , pady=80)
 
@@ -137,7 +136,7 @@ class DashBoard:
         self.productRegistration = tk.Entry(self.tab1 , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
         self.productRegistration.grid(row = 8 , column=2 , columnspan=2 , pady=(0,10) , ipadx=30, ipady=7)
 
-        self.buttonAdd = tk.Button(self.tab1 , text="Add Credential" , bg="#0787FF" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0)
+        self.buttonAdd = tk.Button(self.tab1 , text="Add Credential" , bg="#0787FF" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.addCredential)
         self.buttonAdd.grid(row=9 , column=2 , columnspan=2 , pady=(20,0))
 
 
@@ -187,7 +186,7 @@ class DashBoard:
         self.openMenuChoose.config(border=0)
         self.openMenuChoose.grid(row=1 , column=0, sticky="n" ,padx=(0,450), pady=(101,0) , ipady=3)
 
-        imgSearch = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/magnifying-glass.png"
+        imgSearch = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/magnifying-glass.png"
         self.imageOpen2 = Image.open(imgSearch).resize((30,30))
         self.imageSerch = ImageTk.PhotoImage(self.imageOpen2)
         self.labelSearch = self.imageSerch
@@ -247,7 +246,7 @@ class DashBoard:
         self.AreaPersonal = tk.Frame(self.MenuFrame , width=300 , background="#111735" , height=300)
         self.AreaPersonal.pack(fill="x", side="bottom" )
 
-        img2 = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/logout.png"
+        img2 = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/logout.png"
         self.imageOpen2 = Image.open(img2).resize((42,42))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
         self.label2 = self.imageSecurty
@@ -258,12 +257,12 @@ class DashBoard:
         
 
         self.userNameToShow=usrManager.getUsernameProfile(usernameLOGIN , passwordLOGIN)
-        #ciao = "ciao"
+
         self.userNameProfile = tk.Label(self.AreaPersonal , text="@"+self.userNameToShow, font="Inter 12 bold" , foreground="white" , background="#111735" , padx=7 , pady=7)
         self.userNameProfile.pack(side="left")
 
 
-        imgSettings = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/settings.png"
+        imgSettings = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/settings.png"
         self.imageOpen2 = Image.open(imgSettings).resize((40,40))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
         self.labelSettings = self.imageSecurty
@@ -299,27 +298,76 @@ class DashBoard:
         )
     
 
-    def filterSearchTest(self):
+    def filterSearch(self):
+
         crdManager = credentialsManagement()
+
         valueOfStringOption = self.optionVariable.get() #opzione
         valueOfStringEntry = self.EntryFilterSearch.get() #product
-        id = self.idUser[0] #TUPLA ATTENZIONE NEL CASO ESTRARRE L IDICE NECESSARIO
-        #if self.valueOfStringOption == "SERVICE":
-        print(f"ID User: {id}, Service: {valueOfStringEntry}")
-        rowCrd = crdManager.filterSeacrhService(id , valueOfStringEntry)
+
+        id = self.idUser[0] #TUPLA ATTENZIONE NEL CASO ESTRARRE L IDICE DELL ID NECESSARIO 
+
+        print(f"DEBUG [ ID User: {id}, Service: {valueOfStringEntry} ]") #DEBUG PER MONITORARE IL TIPO DI VARIABILE (1,0) OUTPUT GENERA ERRORE SQL PERCHE NON E UN DATO SINGOLO MA E UNA TUPLA
+        
         
 
         if valueOfStringOption == "SERVICE":    
-            
+
+            rowCrd = crdManager.filterSeacrhService(id , valueOfStringEntry)
             self.tree2.delete(*self.tree2.get_children())
 
             for credential in rowCrd:
                 self.tree2.insert("", tk.END , values=credential)
             self.tree2.update_idletasks()
 
+        elif valueOfStringOption == "USERNAME":
+
+            rowCrd = crdManager.filterSearchUsername(id , valueOfStringEntry)
+            self.tree2.delete(*self.tree2.get_children())
+
+            for credential in rowCrd:
+                self.tree2.insert("" , tk.END , values=credential)
+            self.tree2.update_idletasks()
+
+        elif valueOfStringOption == "EMAIL":
+
+            rowCrd = crdManager.filterSearchEmail(id , valueOfStringEntry)
+            self.tree2.delete(*self.tree2.get_children())
+
+            for credential in rowCrd:
+                self.tree2.insert("" , tk.END , values=credential)
+            self.tree2.update_idletasks()
+
+        elif valueOfStringOption == "ID":
+
+            rowCrd = crdManager.filterSearchID(id, valueOfStringEntry)
+            self.tree2.delete(*self.tree2.get_children())
+
+            for credential in rowCrd:
+                self.tree2.insert("" , tk.END , values=credential)
+            self.tree2.update_idletasks()
+            
     
     def startSeacrch(self):
-        self.filterSearchTest() 
+        self.filterSearch() 
+
+
+    def addCredential(self):
+        
+        id = self.idUser[0]
+
+        username = self.usernameRegistration.get()
+        password = self.passwordRegistration.get()
+        email = self.emailRegistration.get()
+        product = self.productRegistration.get()
+
+        crd = Credential(username , password , email , product)
+        crdManger = credentialsManagement()
+
+        crdManger.addCredentials(crd , id)
+
+        messagebox.showinfo("Credential was successfully added                     .")
+        self.tree.update_idletasks()
 
 
 

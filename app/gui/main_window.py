@@ -15,15 +15,15 @@ import os
 from gui.dashboard import DashBoard
 from gui.register import Register
 
-from logic.db_user_manager import userManagement
+from logic.User.db_user_manager import userManagement
 
 class MainWindow:
 
     def __init__(self , root) :
 
-        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
-        img_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'img', 'account-protection.png')
-        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
+        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop',  'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
+        img_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace', 'Python projects', 'ProximaManagerVGUI', 'assets' , 'img', 'account-protection.png')
+        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'Workspace',  'Python projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
 
         ctypes.windll.gdi32.AddFontResourceW(font_path)
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
@@ -62,7 +62,7 @@ class MainWindow:
         self.secondaryTitleMainFrame2 = ttk.Label(self.MainFrame2 , text="Manager" , font=customFontTitle2 , background="#050617" , foreground="white")
         self.secondaryTitleMainFrame2.place(x=130 , y= 100)
 
-        img2 = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/account-protection.png"
+        img2 = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/account-protection.png"
         self.imageOpen2 = Image.open(img2).resize((240,240))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
 
@@ -77,7 +77,7 @@ class MainWindow:
         self.buttonRegister.place(x=100 , y=350)
 
 
-        img = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/login-.png"
+        img = r"C:/Users/alexa/Desktop/Workspace/Python projects/ProximaManagerVGUI/assets/img/login-.png"
         self.imageOpen = Image.open(img).resize((50,50))
         self.ImageUp = ImageTk.PhotoImage(self.imageOpen)
         #self.label = tk.Label(self.MainFrame , image=self.ImageUp , bg="#0787FF")
@@ -125,12 +125,3 @@ class MainWindow:
         self.root.destroy()
         registerSectionRoot = tk.Tk()
         registrationSection = Register(registerSectionRoot)
-
-        
-
-
-
-
-    #self.btm = ttk.Button(self.MainFrame , text="dio cane")
-          
-    #def are the new function who manage the window like log in or error logIn authentification and all will be managed with the event listner with comand=self.on_button_clcik and de def will be execute it

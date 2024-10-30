@@ -9,8 +9,8 @@ class userManagement():
     def connection(self):
         return mysql.connector.connect(
             host = "localhost" , 
-            user = "rootALEX" , 
-            password = "root2234A03",
+            user = "rootAlex" , 
+            password = "root2003A03",
             database = "credentials_management"
             #auth_plugin='mysql_native_password'
         )
@@ -67,3 +67,6 @@ class userManagement():
             return userId
         else:
             print("Failed LogIn")
+
+    def signIn (self, user):
+        print()
