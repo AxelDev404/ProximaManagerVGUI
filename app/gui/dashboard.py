@@ -74,7 +74,7 @@ class DashBoard:
         self.tab4 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
         self.tab5 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
 
-        for tab in [self.tab1 ,self.tab4, self.tab5]:
+        for tab in [self.tab1 ,self.tab5]:
             tab.grid_rowconfigure(0, weight=0)  # Permette l'espansione della colonna
             tab.grid_rowconfigure(1, weight=0) #tolgo l espansione con lo 0   
             tab.grid_rowconfigure(2, weight=0) 
@@ -99,6 +99,23 @@ class DashBoard:
         self.tab3.grid_rowconfigure(0,weight=1)
         self.tab3.grid_rowconfigure(1,weight=1)
         self.tab3.grid_columnconfigure(0,weight=1)
+
+        self.tab4.grid_rowconfigure(0,weight=1)
+        self.tab4.grid_rowconfigure(1,weight=1)
+        self.tab4.grid_rowconfigure(2,weight=0)
+        self.tab4.grid_rowconfigure(3,weight=0)
+        self.tab4.grid_rowconfigure(4,weight=0)
+        self.tab4.grid_rowconfigure(5,weight=0)
+        self.tab4.grid_rowconfigure(6,weight=0)
+        self.tab4.grid_rowconfigure(7,weight=0)
+        self.tab4.grid_rowconfigure(8,weight=0)
+        self.tab4.grid_rowconfigure(9,weight=0)
+        self.tab4.grid_rowconfigure(10,weight=0)
+        self.tab4.grid_rowconfigure(11,weight=0)
+        self.tab4.grid_rowconfigure(12,weight=0)
+
+
+        self.tab4.grid_columnconfigure(0,weight=1)
 
         
         self.labelTab3 = tk.Label(self.tab3, text="TEST TAB 3")
@@ -179,13 +196,18 @@ class DashBoard:
         
 
         row2 = crdManager.viewAllCredentials(self.idUser)
+        
 
         if row2 is None:
             print("DEBUG : no credentials founed for this user")
         else:
             for row in row2:
-                self.tree.insert("",tk.END , values=row)
+                idCredential = row[0] #predno la riga degli ID
+                self.tree.insert("",tk.END ,iid=idCredential , values=row)
 
+
+        for item in self.tree.get_children():
+            print(" - iid:", item)
 
 
 
@@ -233,7 +255,89 @@ class DashBoard:
         self.tree2.configure(yscrollcommand=self.sby2.set)
         self.sby2.grid(row = 0, column=1, sticky="ns" ,padx=(0,20) , pady=(30,0))
 
+
+        #MANAGE CREDENTIALS TAB 
+
+
+        self.tree3 = ttk.Treeview(self.tab4 ,  columns=("ID" , "USERNAME" , "PASSWORD" , "EMAIL" , "SERVICE") ,  show="headings")
         
+        self.tree3.column("#1", anchor=tk.CENTER)
+        self.tree3.heading("#1" , text="ID")
+        self.tree3.column("#2" , anchor=tk.CENTER)
+        self.tree3.heading("#2" , text="USERNAME")
+        self.tree3.column("#3", anchor=tk.CENTER)
+        self.tree3.heading("#3" , text="PASSWORD")
+        self.tree3.column("#4" , anchor=tk.CENTER)
+        self.tree3.heading("#4" , text="EMAIL")
+        self.tree3.column("#5", anchor=tk.CENTER)
+        self.tree3.heading("#5" , text="SERVICE")
+
+        self.tree3.grid(row=0 , column=0 , sticky="nsew" , pady=(30,0) , padx=(20,0) )
+        self.sby3 = ttk.Scrollbar(self.tab4 , orient=tk.VERTICAL , command=self.tree3.yview)
+        self.tree3.configure(yscrollcommand=self.sby3.set)
+        self.sby3.grid(row = 0, column=1, sticky="ns" ,padx=(0,20) , pady=(30,0))
+
+        self.idUser = usrManager.getIdUser(usernameLOGIN , passwordLOGIN)
+        
+
+        row3 = crdManager.viewAllCredentials(self.idUser)
+        if row3 is None:
+                print("DEBUG : no credentials founed for this user")
+        else:
+            for row in row3:
+                idCredential = row[0] #predno la riga degli ID
+                self.tree3.insert("",tk.END ,iid=idCredential , values=row) #iid cambio l id di defoult e lo sostiuisco con quelli del database per poter aggiornare l insermeto in tempo reale
+
+
+
+        self.inputIDVar = tk.IntVar()
+        self.inputUsernameUpdate = tk.StringVar()
+        self.inputPasswordUpdate = tk.StringVar()
+        self.inputEmailUpdate = tk.StringVar()
+        self.inputProductUpdate = tk.StringVar()
+
+        self.inputIDVar.set(0)
+        self.inputUsernameUpdate.set("")
+        self.inputPasswordUpdate.set("")
+        self.inputEmailUpdate.set("")
+        self.inputProductUpdate.set("")
+
+        
+        self.IdTitle = tk.Label(self.tab4 , text="ID" , font="Inter 10" ,  foreground="white" , background="#121528")
+        self.IdTitle.grid(row=2 , column=0 , columnspan=2 , pady=(20,0))
+
+        #self.showTab(self.tab1)
+        self.IdInput = tk.Entry(self.tab4, textvariable=self.inputIDVar , width=42 , border=1 , bg="#1D2447" , foreground="white" , font=("Inter" , 11))
+        self.IdInput.grid(row=3 , column=0 ,  columnspan=2 , pady=(0,10) , ipadx=30, ipady=7)
+
+        self.pwdTitle =  tk.Label(self.tab4 , text="Password" , font="Inter 10" , foreground="white" , background="#121528")
+        self.pwdTitle.grid(row=4 , column=0 , columnspan=2)
+
+        self.pwdChange = tk.Entry(self.tab4, textvariable=self.inputPasswordUpdate , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
+        self.pwdChange.grid(row=5 , column=0 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
+
+        self.emailTitle2 = tk.Label(self.tab4 ,  text="Email" , font="Inter 10" , foreground="white" , background="#121528")
+        self.emailTitle2.grid(row=6 , column=0 ,  columnspan=2 )
+
+        self.emailChange = tk.Entry(self.tab4, textvariable=self.inputEmailUpdate , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
+        self.emailChange.grid(row=7 , column=0 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
+
+        self.usernameTitle2 = tk.Label(self.tab4 ,  text="Username" , font="Inter 10" , foreground="white" , background="#121528")
+        self.usernameTitle2.grid(row=8 , column=0 ,  columnspan=2 )
+
+        self.usernameChange = tk.Entry(self.tab4, textvariable=self.inputUsernameUpdate , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
+        self.usernameChange.grid(row=9 , column=0 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
+
+        self.productTitle = tk.Label(self.tab4 ,  text="Product" , font="Inter 10" , foreground="white" , background="#121528")
+        self.productTitle.grid(row=10 , column=0 ,  columnspan=2 )
+
+        self.productChange = tk.Entry(self.tab4, textvariable=self.inputProductUpdate , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
+        self.productChange.grid(row=11 , column=0 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
+
+        self.buttonAdd = tk.Button(self.tab4 , text="Update" , bg="#0787FF" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.changeUsernameCredential)
+        self.buttonAdd.grid(row=12 , column=0 , columnspan=2 , pady=(20,100))
+
+
 
         self.Title = tk.Label(self.MenuFrame , text="Proxima Manger" , font=customFontSingIn , background="#1B1A36" , foreground="white")
         self.Title.pack(fill="x" , pady=40)
@@ -306,15 +410,6 @@ class DashBoard:
             Widget.grid_forget()
         
         tab_frame.grid(sticky="nsew")
-
-
-    def db_connect(self):
-        return mysql.connector.connect(
-            host = "localhost",
-            user = "rootALEX",
-            password = "root2234A03", #CHANGE
-            database = "credentials_management"
-        )
     
 
     def filterSearch(self):
@@ -398,11 +493,36 @@ class DashBoard:
         self.inputVarEmail.set("")
         self.inputVarProduct.set("")
         
-        messagebox.showinfo("Credential was successfully added                     .")
+        messagebox.showinfo("Credential was successfully added                                                 .")
 
 
- 
+    def changeUsernameCredential(self):
+        idCredential = self.inputIDVar.get()
+        username = self.inputUsernameUpdate.get()
 
+        idusr = self.idUser[0]
+
+        crdManager = credentialsManagement()
+        print("DEBUG: idCredential =", idCredential)
+        
+        if not username == "" and idCredential > 0:
+
+            if self.tree.exists(idCredential):
+    
+                crdManager.changeUsername(idusr , idCredential , username)
+                self.tree.item(idCredential , values=(idCredential , username)) #aggiorno con indice  e parametri indice e username
+                messagebox.showinfo("Username was correctly updated !                                                               .")
+
+                self.tree3.item(idCredential , values=(idCredential , username))
+                self.inputUsernameUpdate.set("")
+                self.inputIDVar.set(0)
+            else:
+                messagebox.showerror("Database internal error!")
+        
+        else: 
+            messagebox.showerror("Unable to change the username because the input field is empty or the ID is invalid !                                                    .")
+
+        
 
 
     def on_hover(self, e):

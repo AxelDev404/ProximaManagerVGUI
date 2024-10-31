@@ -105,6 +105,7 @@ class credentialsManagement():
         else:
             print("Fatal error to give credentials")
 
+
     def addCredentials(self , crd , idUser):
         
         values = (idUser , crd.username , crd.pwd , crd.email , crd.product)
@@ -125,3 +126,23 @@ class credentialsManagement():
         db.close()
 
         return idCredential
+    
+
+    def changeUsername(self , idUser , idCredential , updateUsername):
+        db = self.db_connect()
+        cursor = db.cursor()
+
+        sqlQuery = "UPDATE credentials SET username = %s WHERE id_user_credentials = %s AND id_credential = %s"
+        cursor.execute(sqlQuery , (updateUsername , idUser , idCredential))
+
+        db.commit()
+        cursor.close()
+        db.close()
+
+        
+
+        if cursor.rowcount>0:
+            print("DEBUG : username was updated!")
+        else:
+            print("DEBUG : username can't be updated!")
+
