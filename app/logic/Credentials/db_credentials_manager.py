@@ -134,8 +134,8 @@ class credentialsManagement():
 
         sqlQuery = "UPDATE credentials SET username = %s WHERE id_user_credentials = %s AND id_credential = %s"
         cursor.execute(sqlQuery , (updateUsername , idUser , idCredential))
-
         db.commit()
+        
         cursor.close()
         db.close()
 
@@ -146,3 +146,53 @@ class credentialsManagement():
         else:
             print("DEBUG : username can't be updated!")
 
+
+    def changePassword(self , idUser , idCredential , updatePassword):
+        db = self.db_connect()
+        cursor = db.cursor()
+        
+        sqlQuery = "UPDATE credentials SET pwd = %s WHERE id_user_credentials = %s AND id_credential = %s"
+        cursor.execute(sqlQuery , (updatePassword , idUser , idCredential))
+        db.commit()
+
+        cursor.close()
+        db.close()
+
+        if cursor.rowcount>0:
+            print("DEBUG : Password was updated!")
+        else:
+            print("DEBUG : Password can't be updated!")
+
+    
+    def changeEmail(self , idUser , idCredential , updateEmail):
+        db = self.db_connect()
+        cursor = db.cursor()
+
+        sqlQuery = "UPDATE credentials SET email = %s WHERE id_user_credentials = %s AND id_credential = %s"
+        cursor.execute(sqlQuery , (updateEmail , idUser , idCredential))
+        db.commit()
+
+        cursor.close()
+        db.close()
+
+        if cursor.rowcount>0:
+            print("DEBUG : Email was correctly updated")
+        else:
+            print("DEBUG : Email can't be updated")
+
+
+    def changeProduct(self , idUser , idCredential , updateProduct):
+        db = self.db_connect()
+        cursor = db.cursor()
+
+        sqlQuery = "UPDATE credentials SET product = %s WHERE id_user_credentials = %s AND id_credential = %s"
+        cursor.execute(sqlQuery , (updateProduct , idUser , idCredential))
+        db.commit()
+
+        cursor.close()
+        db.close()
+
+        if cursor.rowcount > 0:
+            print("DEBUG : product was correctly updated!")
+        else:
+            print("DEBUG : product can't be updated!")

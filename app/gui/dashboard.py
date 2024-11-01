@@ -100,8 +100,8 @@ class DashBoard:
         self.tab3.grid_rowconfigure(1,weight=1)
         self.tab3.grid_columnconfigure(0,weight=1)
 
-        self.tab4.grid_rowconfigure(0,weight=1)
-        self.tab4.grid_rowconfigure(1,weight=1)
+        self.tab4.grid_rowconfigure(0,weight=0)
+        self.tab4.grid_rowconfigure(1,weight=0)
         self.tab4.grid_rowconfigure(2,weight=0)
         self.tab4.grid_rowconfigure(3,weight=0)
         self.tab4.grid_rowconfigure(4,weight=0)
@@ -113,6 +113,8 @@ class DashBoard:
         self.tab4.grid_rowconfigure(10,weight=0)
         self.tab4.grid_rowconfigure(11,weight=0)
         self.tab4.grid_rowconfigure(12,weight=0)
+        self.tab4.grid_rowconfigure(13, weight=0)
+        #self.tab4.grid_rowconfigure(14, weight=0)
 
 
         self.tab4.grid_columnconfigure(0,weight=1)
@@ -204,7 +206,7 @@ class DashBoard:
             for row in row2:
                 idCredential = row[0] #predno la riga degli ID
                 self.tree.insert("",tk.END ,iid=idCredential , values=row)
-
+                self.tree.update_idletasks()
 
         for item in self.tree.get_children():
             print(" - iid:", item)
@@ -259,37 +261,6 @@ class DashBoard:
         #MANAGE CREDENTIALS TAB 
 
 
-        self.tree3 = ttk.Treeview(self.tab4 ,  columns=("ID" , "USERNAME" , "PASSWORD" , "EMAIL" , "SERVICE") ,  show="headings")
-        
-        self.tree3.column("#1", anchor=tk.CENTER)
-        self.tree3.heading("#1" , text="ID")
-        self.tree3.column("#2" , anchor=tk.CENTER)
-        self.tree3.heading("#2" , text="USERNAME")
-        self.tree3.column("#3", anchor=tk.CENTER)
-        self.tree3.heading("#3" , text="PASSWORD")
-        self.tree3.column("#4" , anchor=tk.CENTER)
-        self.tree3.heading("#4" , text="EMAIL")
-        self.tree3.column("#5", anchor=tk.CENTER)
-        self.tree3.heading("#5" , text="SERVICE")
-
-        self.tree3.grid(row=0 , column=0 , sticky="nsew" , pady=(30,0) , padx=(20,0) )
-        self.sby3 = ttk.Scrollbar(self.tab4 , orient=tk.VERTICAL , command=self.tree3.yview)
-        self.tree3.configure(yscrollcommand=self.sby3.set)
-        self.sby3.grid(row = 0, column=1, sticky="ns" ,padx=(0,20) , pady=(30,0))
-
-        self.idUser = usrManager.getIdUser(usernameLOGIN , passwordLOGIN)
-        
-
-        row3 = crdManager.viewAllCredentials(self.idUser)
-        if row3 is None:
-                print("DEBUG : no credentials founed for this user")
-        else:
-            for row in row3:
-                idCredential = row[0] #predno la riga degli ID
-                self.tree3.insert("",tk.END ,iid=idCredential , values=row) #iid cambio l id di defoult e lo sostiuisco con quelli del database per poter aggiornare l insermeto in tempo reale
-
-
-
         self.inputIDVar = tk.IntVar()
         self.inputUsernameUpdate = tk.StringVar()
         self.inputPasswordUpdate = tk.StringVar()
@@ -302,9 +273,20 @@ class DashBoard:
         self.inputEmailUpdate.set("")
         self.inputProductUpdate.set("")
 
+        self.manageVar = StringVar()
+        self.manageVar.set("Filters")
+
+        self.manageList = ['USERNAME', 'PASSWORD' , 'EMAIL' , 'SERVICE' , 'CHANGE ALL']
+
+        self.Instruction = ttk.Label(self.tab4 , text="You have to select the filter to choose what you want to change in your credential clicking on the filters menu near ID input, after that you have to write the ID of your credential before to do any changes" , font="Inter 13" , foreground="white" , background="#121528")
+        self.Instruction.grid(row = 1 , column=0 , pady=(80,30))
+
+        self.modifyTarget = tk.OptionMenu(self.tab4 , self.manageVar , * self.manageList)
+        self.modifyTarget.config(border=2 , bg="#0787FF" ,  foreground="white" , font="Inter 11" , borderwidth=0)
+        self.modifyTarget.grid(row=3 , column=0, columnspan=2 , pady=(0,10) ,ipady=3 , padx=(560,0))
         
         self.IdTitle = tk.Label(self.tab4 , text="ID" , font="Inter 10" ,  foreground="white" , background="#121528")
-        self.IdTitle.grid(row=2 , column=0 , columnspan=2 , pady=(20,0))
+        self.IdTitle.grid(row=2 , column=0 , columnspan=2 , pady=(10,0))
 
         #self.showTab(self.tab1)
         self.IdInput = tk.Entry(self.tab4, textvariable=self.inputIDVar , width=42 , border=1 , bg="#1D2447" , foreground="white" , font=("Inter" , 11))
@@ -334,8 +316,11 @@ class DashBoard:
         self.productChange = tk.Entry(self.tab4, textvariable=self.inputProductUpdate , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
         self.productChange.grid(row=11 , column=0 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
 
-        self.buttonAdd = tk.Button(self.tab4 , text="Update" , bg="#0787FF" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.changeUsernameCredential)
-        self.buttonAdd.grid(row=12 , column=0 , columnspan=2 , pady=(20,100))
+        self.buttonAdd = tk.Button(self.tab4 , text="Update credential" , bg="#0787FF" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.changeUsernameCredential)
+        self.buttonAdd.grid(row=12 , column=0 , columnspan=2 , pady=(20,10))
+
+        self.buttonAdd = tk.Button(self.tab4 , text="Delete credential" , bg="#0787FF" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0)
+        self.buttonAdd.grid(row=13 , column=0 , columnspan=2 , pady=(20,10))
 
 
 
@@ -498,30 +483,83 @@ class DashBoard:
 
     def changeUsernameCredential(self):
         idCredential = self.inputIDVar.get()
+
         username = self.inputUsernameUpdate.get()
+        password = self.inputPasswordUpdate.get()
+        email = self.inputEmailUpdate.get()
+        product = self.inputProductUpdate.get()
+
+        filterChoose = self.manageVar.get()
 
         idusr = self.idUser[0]
 
         crdManager = credentialsManagement()
         print("DEBUG: idCredential =", idCredential)
         
-        if not username == "" and idCredential > 0:
 
-            if self.tree.exists(idCredential):
-    
-                crdManager.changeUsername(idusr , idCredential , username)
-                self.tree.item(idCredential , values=(idCredential , username)) #aggiorno con indice  e parametri indice e username
-                messagebox.showinfo("Username was correctly updated !                                                               .")
+        if filterChoose == "USERNAME":
 
-                self.tree3.item(idCredential , values=(idCredential , username))
-                self.inputUsernameUpdate.set("")
-                self.inputIDVar.set(0)
-            else:
-                messagebox.showerror("Database internal error!")
+            if not username == "" and idCredential > 0:
+
+                if self.tree.exists(idCredential):
         
-        else: 
-            messagebox.showerror("Unable to change the username because the input field is empty or the ID is invalid !                                                    .")
+                    crdManager.changeUsername(idusr , idCredential , username)
+                    self.tree.item(idCredential , values=(idCredential , username)) #aggiorno con indice  e parametri indice e username
+                    messagebox.showinfo("Username was correctly updated !                                                               .")
+                    #self.tree3.item(idCredential , values=(idCredential , username))                
+                    self.tree.update_idletasks() #NOTA PER TOPINO ALEX CHIEDI A CHAT GPT PERCHE C'E UN ERRORE NELLA DASHBOARD E NON RIUSCIAMO A MOSTRARE I PARAMETRI GIUSTI QUANDO MODIFICHIAMO PASSWORD, EMAIL E SERVICE NELLA VIEW CREDENTIAL.... TI AMOOOOOOOOO INFINITOOOOOO GIULS TOPINA CIAO CIAO 
 
+                    self.inputVarUsername.set("")
+                    self.inputIDVar.set(0)
+                else:
+                    messagebox.showerror("Database internal error!")
+            
+            else: 
+                messagebox.showerror("Unable to change the username because the input field is empty or the ID is invalid !                                                    .")
+
+
+        elif filterChoose == "PASSWORD":
+
+            if not password == "" and idCredential > 0:
+                
+                if self.tree.exists(idCredential):
+                    
+                    crdManager.changePassword(idusr , idCredential , password)
+                    self.tree.item(idCredential , values=(idCredential , password))
+                    messagebox.showinfo("Password was correctly updated !                                                               .")
+                    self.tree.update_idletasks()
+
+                    self.inputVarPassword.set("")
+                    self.inputIDVar.set(0)
+                else:
+                    messagebox.showerror("Database internal error!")
+            else:
+                messagebox.showerror("You have to choose an option and write the ID credential before update                                                                       .")
+
+
+        elif filterChoose == "EMAIL":
+
+            if not email == "" and idCredential > 0:
+
+                if self.tree.exists(idCredential):
+
+                    crdManager.changeEmail(idusr , idCredential , email)
+                    self.tree.item(idCredential , values=(idCredential , email))
+                    messagebox.showinfo("Username was correctly updated !                                                               .")
+                    self.tree.update_idletasks()
+
+                    self.inputProductUpdate.set("")
+                    self.inputIDVar.set(0)
+            else:
+                messagebox.showerror("You have to choose an option and write the ID credential before update                                                                       .")
+
+
+        elif filterChoose == "PRODUCT":
+            messagebox.showerror("You have to choose an option and write the ID credential before update                                                                       .")
+
+
+        elif filterChoose == "CHANGE ALL":
+            messagebox.showerror("You have to choose an option and write the ID credential before update                                                                       .")
         
 
 
