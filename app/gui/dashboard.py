@@ -74,7 +74,7 @@ class DashBoard:
         self.tab4 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
         self.tab5 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
 
-        for tab in [self.tab1 ,self.tab5]:
+        for tab in [self.tab1]:
             tab.grid_rowconfigure(0, weight=0)  # Permette l'espansione della colonna
             tab.grid_rowconfigure(1, weight=0) #tolgo l espansione con lo 0   
             tab.grid_rowconfigure(2, weight=0) 
@@ -115,19 +115,35 @@ class DashBoard:
         self.tab4.grid_rowconfigure(12,weight=0)
         self.tab4.grid_rowconfigure(13, weight=0)
         #self.tab4.grid_rowconfigure(14, weight=0)
-
-
         self.tab4.grid_columnconfigure(0,weight=1)
 
+
+        self.tab5.grid_rowconfigure(0,weight=0)
+        self.tab5.grid_rowconfigure(1,weight=0)
+        self.tab5.grid_rowconfigure(2,weight=0)
+        self.tab5.grid_rowconfigure(3,weight=0)
+        self.tab5.grid_rowconfigure(4,weight=0)
+        self.tab5.grid_rowconfigure(5,weight=0)
+        self.tab5.grid_rowconfigure(6,weight=0)
+        self.tab5.grid_rowconfigure(7,weight=0)
+        self.tab5.grid_rowconfigure(8,weight=0)
+        self.tab5.grid_rowconfigure(9,weight=0)
+        self.tab5.grid_rowconfigure(10,weight=0)
+        self.tab5.grid_rowconfigure(11,weight=0)
+        self.tab5.grid_rowconfigure(12,weight=0)
+        self.tab5.grid_rowconfigure(13, weight=0)
+        #self.tab4.grid_rowconfigure(14, weight=0)
+
+        self.tab5.grid_columnconfigure(0,weight=1)
+
         
-        self.labelTab3 = tk.Label(self.tab3, text="TEST TAB 3")
-        self.labelTab4 = tk.Label(self.tab4, text="TEST TAB 4")
+
         self.labelTab5 = tk.Label(self.tab5, text="TEST TAB 5")
 
 
         #ADD CREDENTIAL TAB#
 
-# Inizializza le StringVar
+        # Inizializza le StringVar
         self.inputVarUsername = tk.StringVar()
         self.inputVarPassword = tk.StringVar()
         self.inputVarEmail = tk.StringVar()
@@ -140,13 +156,12 @@ class DashBoard:
         self.inputVarProduct.set("")
 
 
-        self.Title =tk.Label(self.tab1 , text="Add Credentials" , font="Inter 13" , foreground="white" , background="#121528")
-        self.Title.grid(row = 0 , column = 2, columnspan=2 , sticky="n" , pady=80)
+        self.Title =tk.Label(self.tab1 , text="Add Credentials" , font="Inter 13" , foreground="white" , background="#121528") 
+        self.Title.grid(row = 0 , column=2, columnspan=2 , sticky="n" , pady=80)
 
         self.usernameTitle = tk.Label(self.tab1 , text="Username" , font="Inter 10" ,  foreground="white" , background="#121528")
         self.usernameTitle.grid(row=1 , column=2 , columnspan=2)
 
-        #self.showTab(self.tab1)
         self.usernameRegistration = tk.Entry(self.tab1, textvariable=self.inputVarUsername , width=42 , border=1 , bg="white" , foreground="black" , font=("Inter" , 11))
         self.usernameRegistration.grid(row=2 , column=2 ,  columnspan=2 , pady=(0,10) , ipadx=30, ipady=7)
 
@@ -157,7 +172,7 @@ class DashBoard:
         self.passwordRegistration.grid(row=4 , column=2 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
 
         self.emailTitle = tk.Label(self.tab1 ,  text="Email" , font="Inter 10" , foreground="white" , background="#121528")
-        self.emailTitle.grid(row=5 , column=2 ,  columnspan=2 )
+        self.emailTitle.grid(row=5 , column=2 ,  columnspan=2)
 
         self.emailRegistration = tk.Entry(self.tab1, textvariable=self.inputVarEmail , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
         self.emailRegistration.grid(row = 6 , column=2 ,  columnspan=2 , pady=(0,10) , ipadx=30, ipady=7)
@@ -168,7 +183,7 @@ class DashBoard:
         self.productRegistration = tk.Entry(self.tab1, textvariable=self.inputVarProduct , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
         self.productRegistration.grid(row = 8 , column=2 , columnspan=2 , pady=(0,10) , ipadx=30, ipady=7)
 
-        self.buttonAdd = tk.Button(self.tab1 , text="Add Credential" , bg="#0787FF" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.addCredential)
+        self.buttonAdd = tk.Button(self.tab1 , text="Add Credential" , bg="#3D4985" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.addCredential)
         self.buttonAdd.grid(row=9 , column=2 , columnspan=2 , pady=(20,0))
 
 
@@ -282,14 +297,13 @@ class DashBoard:
         self.Instruction.grid(row = 1 , column=0 , pady=(80,30))
 
         self.modifyTarget = tk.OptionMenu(self.tab4 , self.manageVar , * self.manageList)
-        self.modifyTarget.config(bg="#0787FF" ,  foreground="white" , font="Inter 11")
+        self.modifyTarget.config(bg="#3D4985" ,  foreground="white" , font="Inter 11")
         self.modifyTarget.grid(row=3 , column=0, columnspan=2 , pady=(0,10) ,ipady=3 , padx=(560,0))
         
         self.IdTitle = tk.Label(self.tab4 , text="ID" , font="Inter 10" ,  foreground="white" , background="#121528")
         self.IdTitle.grid(row=2 , column=0 , columnspan=2 , pady=(10,0))
 
-        #self.showTab(self.tab1)
-        self.IdInput = tk.Entry(self.tab4, textvariable=self.inputIDVar , width=42 , border=1 , bg="#1D2447" , foreground="white" , font=("Inter" , 11))
+        self.IdInput = tk.Entry(self.tab4, textvariable=self.inputIDVar , width=42 , border=1 , bg="#3D4985" , foreground="white" , font=("Inter" , 11))
         self.IdInput.grid(row=3 , column=0 ,  columnspan=2 , pady=(0,10) , ipadx=30, ipady=7)
 
         self.pwdTitle =  tk.Label(self.tab4 , text="Password" , font="Inter 10" , foreground="white" , background="#121528")
@@ -316,14 +330,72 @@ class DashBoard:
         self.productChange = tk.Entry(self.tab4, textvariable=self.inputProductUpdate , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
         self.productChange.grid(row=11 , column=0 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
 
-        self.buttonAdd = tk.Button(self.tab4 , text="Update credential" , bg="#0787FF" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.changeUsernameCredential)
+        self.buttonAdd = tk.Button(self.tab4 , text="Update credential" , bg="#3D4985" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.changeUsernameCredential)
         self.buttonAdd.grid(row=12 , column=0 , columnspan=2 , pady=(20,10))
 
-        self.buttonDel = tk.Button(self.tab4 , text="Delete credential" , bg="#0787FF" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0 ,  command=self.deleteCredential)
+        self.buttonDel = tk.Button(self.tab4 , text="Delete credential" , bg="#3D4985" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0 ,  command=self.deleteCredential)
         self.buttonDel.grid(row=13 , column=0 , columnspan=2 , pady=(20,10))
 
 
 
+
+        #PROFILE SETTINGS
+
+        self.Title = ttk.Label(self.tab5 , text="PROFILE SETTINGS" , font="Inter 13" , foreground="white" , background="#121528")
+        self.Title.grid(row = 0 , column=0 , pady=(80,30))
+
+        self.manageVarSettings = StringVar()
+        self.manageVarSettings.set("Filters")
+
+        self.manageListSettings = ['USERNAME', 'PASSWORD' , 'EMAIL']
+
+        self.modifyTargetSetting = tk.OptionMenu(self.tab5 , self.manageVarSettings , * self.manageListSettings)
+        self.modifyTargetSetting.config(bg="#3D4985" ,  foreground="white" , font="Inter 11")
+        self.modifyTargetSetting.grid(row=2 , column=0, columnspan=2 , pady=(0,10) ,ipady=3 , padx=(560,0))
+
+        self.usernameTitleSetting = tk.Label(self.tab5 , text="Username" , font="Inter 10" ,  foreground="white" , background="#121528")
+        self.usernameTitleSetting.grid(row=1 , column=0 , columnspan=2)
+
+        self.usernameSetting = tk.Entry(self.tab5, textvariable=self.inputVarUsername , width=42 , border=1 , bg="white" , foreground="black" , font=("Inter" , 11))
+        self.usernameSetting.grid(row=2 , column=0 ,  columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
+
+        self.passwordTitleSetting =  tk.Label(self.tab5 , text="Password" , font="Inter 10" , foreground="white" , background="#121528")
+        self.passwordTitleSetting.grid(row=3 , column=0 , columnspan=2)
+
+        self.passwordSetting = tk.Entry(self.tab5, textvariable=self.inputVarPassword , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
+        self.passwordSetting.grid(row=4 , column=0 , columnspan=2, pady=(0,10), ipadx=30, ipady=7)
+
+        self.emailTitleSetting = tk.Label(self.tab5 ,  text="Email" , font="Inter 10" , foreground="white" , background="#121528")
+        self.emailTitleSetting.grid(row=5 , column=0 ,  columnspan=2 )
+
+        self.emailSetting = tk.Entry(self.tab5, textvariable=self.inputVarEmail , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
+        self.emailSetting.grid(row = 6 , column=0 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
+
+        self.buttonAdd = tk.Button(self.tab5 , text="Update credential" , bg="#3D4985" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0)
+        self.buttonAdd.grid(row=7 , column=0 , columnspan=2 , pady=(20,10))
+
+        self.Title2 = ttk.Label(self.tab5 , text="PERSONAL INFORMATION" , font="Inter 13" , foreground="white" , background="#121528")
+        self.Title2.grid(row=8 , column=0 , columnspan=2 , pady=(50,0))
+        
+        
+        iduser = usrManager.getIdUser(usernameLOGIN , passwordLOGIN)
+        idusr = iduser[0]
+        stringID = str(idusr) #conversione da intero a stringa per l inerimento nella label
+
+        username = usrManager.getUsernameProfile(usernameLOGIN, passwordLOGIN)
+        email = usrManager.getEmail(usernameLOGIN , passwordLOGIN)
+
+
+        self.getIDuser = ttk.Label(self.tab5 , text="ID : "+stringID, font="Inter 11" , foreground="white" , background="#121528")
+        self.getIDuser.grid(row= 9 , column=0 , columnspan=2 , pady=(20,10))
+
+        self.getUsername = ttk.Label(self.tab5 , text="Username : "+username, font="Inter 11" , foreground="white" , background="#121528")
+        self.getUsername.grid(row= 10 , column=0 , columnspan=2 , pady=(10,10))
+
+        self.getEmail = ttk.Label(self.tab5 , text="Email : "+email , font="Inter 11" , foreground="white" , background="#121528")
+        self.getEmail.grid(row= 11 , column=0 , columnspan=2 , pady=(10,10))
+
+    
         self.Title = tk.Label(self.MenuFrame , text="Proxima Manger" , font=customFontSingIn , background="#1B1A36" , foreground="white")
         self.Title.pack(fill="x" , pady=40)
 
@@ -609,6 +681,7 @@ class DashBoard:
         idCredential = self.inputIDVar.get()
         iduser = self.idUser[0]
         crdManager = credentialsManagement()
+        
         if idCredential>0:
 
             if self.tree.exists(idCredential):

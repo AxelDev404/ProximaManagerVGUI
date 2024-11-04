@@ -107,4 +107,19 @@ class userManagement():
             return controllExistance
         
         
-        
+    def getEmail(self , username , password): 
+        db = self.connection()
+        cursor = db.cursor()
+
+        sqlQuery = "SELECT email FROM user WHERE username = %s AND pwd = %s"
+        cursor.execute(sqlQuery , (username , password))
+
+        usr = cursor.fetchone()
+        cursor.close()
+        db.close()
+
+        if usr:
+            email = usr[0]
+            return email 
+        else:
+            print("DEBUG : Cant get the email from user")
