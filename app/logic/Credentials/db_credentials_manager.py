@@ -196,3 +196,18 @@ class credentialsManagement():
             print("DEBUG : product was correctly updated!")
         else:
             print("DEBUG : product can't be updated!")
+
+    def deleteCredentialByID(self, idUser , idCredential):
+        db = self.db_connect()
+        cursor = db.cursor()
+
+        sqlQuery = "DELETE FROM credentials WHERE id_user_credentials = %s AND id_credential = %s"
+        cursor.execute(sqlQuery , (idUser , idCredential))
+
+        cursor.close()
+        db.close()
+
+        if cursor.rowcount>0:
+            print("DEBUG : Credential was corectly deleted!")
+        else:
+            print("DEBUG : Credential can't be deleted!")

@@ -282,7 +282,7 @@ class DashBoard:
         self.Instruction.grid(row = 1 , column=0 , pady=(80,30))
 
         self.modifyTarget = tk.OptionMenu(self.tab4 , self.manageVar , * self.manageList)
-        self.modifyTarget.config(border=2 , bg="#0787FF" ,  foreground="white" , font="Inter 11" , borderwidth=0)
+        self.modifyTarget.config(bg="#0787FF" ,  foreground="white" , font="Inter 11")
         self.modifyTarget.grid(row=3 , column=0, columnspan=2 , pady=(0,10) ,ipady=3 , padx=(560,0))
         
         self.IdTitle = tk.Label(self.tab4 , text="ID" , font="Inter 10" ,  foreground="white" , background="#121528")
@@ -293,24 +293,24 @@ class DashBoard:
         self.IdInput.grid(row=3 , column=0 ,  columnspan=2 , pady=(0,10) , ipadx=30, ipady=7)
 
         self.pwdTitle =  tk.Label(self.tab4 , text="Password" , font="Inter 10" , foreground="white" , background="#121528")
-        self.pwdTitle.grid(row=4 , column=0 , columnspan=2)
+        self.pwdTitle.grid(row=6 , column=0 , columnspan=2)
 
         self.pwdChange = tk.Entry(self.tab4, textvariable=self.inputPasswordUpdate , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
-        self.pwdChange.grid(row=5 , column=0 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
+        self.pwdChange.grid(row=7 , column=0 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
 
         self.emailTitle2 = tk.Label(self.tab4 ,  text="Email" , font="Inter 10" , foreground="white" , background="#121528")
-        self.emailTitle2.grid(row=6 , column=0 ,  columnspan=2 )
+        self.emailTitle2.grid(row=8 , column=0 ,  columnspan=2 )
 
         self.emailChange = tk.Entry(self.tab4, textvariable=self.inputEmailUpdate , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
-        self.emailChange.grid(row=7 , column=0 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
+        self.emailChange.grid(row=9 , column=0 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
 
         self.usernameTitle2 = tk.Label(self.tab4 ,  text="Username" , font="Inter 10" , foreground="white" , background="#121528")
-        self.usernameTitle2.grid(row=8 , column=0 ,  columnspan=2 )
+        self.usernameTitle2.grid(row=4 , column=0 ,  columnspan=2 )
 
         self.usernameChange = tk.Entry(self.tab4, textvariable=self.inputUsernameUpdate , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
-        self.usernameChange.grid(row=9 , column=0 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
+        self.usernameChange.grid(row=5 , column=0 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
 
-        self.productTitle = tk.Label(self.tab4 ,  text="Product" , font="Inter 10" , foreground="white" , background="#121528")
+        self.productTitle = tk.Label(self.tab4 ,  text="Service" , font="Inter 10" , foreground="white" , background="#121528")
         self.productTitle.grid(row=10 , column=0 ,  columnspan=2 )
 
         self.productChange = tk.Entry(self.tab4, textvariable=self.inputProductUpdate , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
@@ -319,8 +319,8 @@ class DashBoard:
         self.buttonAdd = tk.Button(self.tab4 , text="Update credential" , bg="#0787FF" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.changeUsernameCredential)
         self.buttonAdd.grid(row=12 , column=0 , columnspan=2 , pady=(20,10))
 
-        self.buttonAdd = tk.Button(self.tab4 , text="Delete credential" , bg="#0787FF" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0)
-        self.buttonAdd.grid(row=13 , column=0 , columnspan=2 , pady=(20,10))
+        self.buttonDel = tk.Button(self.tab4 , text="Delete credential" , bg="#0787FF" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0 ,  command=self.deleteCredential)
+        self.buttonDel.grid(row=13 , column=0 , columnspan=2 , pady=(20,10))
 
 
 
@@ -504,12 +504,14 @@ class DashBoard:
                 if self.tree.exists(idCredential):
         
                     crdManager.changeUsername(idusr , idCredential , username)
-                    self.tree.item(idCredential , values=(idCredential , username)) #aggiorno con indice  e parametri indice e username
-                    messagebox.showinfo("Username was correctly updated !                                                               .")
-                    #self.tree3.item(idCredential , values=(idCredential , username))                
-                    self.tree.update_idletasks() #NOTA PER TOPINO ALEX CHIEDI A CHAT GPT PERCHE C'E UN ERRORE NELLA DASHBOARD E NON RIUSCIAMO A MOSTRARE I PARAMETRI GIUSTI QUANDO MODIFICHIAMO PASSWORD, EMAIL E SERVICE NELLA VIEW CREDENTIAL.... TI AMOOOOOOOOO INFINITOOOOOO GIULS TOPINA CIAO CIAO 
 
-                    self.inputVarUsername.set("")
+                    values1 = self.tree.item(idCredential , 'values') #aggiorno con indice  e parametri indice e username
+                    valUpdateUsername = (values1[0] , username , values1[2] , values1[3] , values1[4])
+                    self.tree.item(idCredential , values=valUpdateUsername)
+
+                    messagebox.showinfo("Username was correctly updated !                                                               .")
+
+                    self.inputUsernameUpdate.set("")
                     self.inputIDVar.set(0)
                 else:
                     messagebox.showerror("Database internal error!")
@@ -525,11 +527,14 @@ class DashBoard:
                 if self.tree.exists(idCredential):
                     
                     crdManager.changePassword(idusr , idCredential , password)
-                    self.tree.item(idCredential , values=(idCredential , password))
-                    messagebox.showinfo("Password was correctly updated !                                                               .")
-                    self.tree.update_idletasks()
 
-                    self.inputVarPassword.set("")
+                    values = self.tree.item(idCredential , 'values') #ricera delle colonne corrette nell tree
+                    updateValues = (values[0] , values[1] , password)  #ricera delle colonne corrette nell tree con gli indici giusti
+                    self.tree.item(idCredential , values=updateValues) #ricera delle colonne corrette nell tree
+
+                    messagebox.showinfo("Password was correctly updated !                                                               .")
+
+                    self.inputPasswordUpdate.set("")
                     self.inputIDVar.set(0)
                 else:
                     messagebox.showerror("Database internal error!")
@@ -544,23 +549,77 @@ class DashBoard:
                 if self.tree.exists(idCredential):
 
                     crdManager.changeEmail(idusr , idCredential , email)
-                    self.tree.item(idCredential , values=(idCredential , email))
-                    messagebox.showinfo("Username was correctly updated !                                                               .")
-                    self.tree.update_idletasks()
 
-                    self.inputProductUpdate.set("")
+                    values2 = self.tree.item(idCredential , 'values')
+                    updateValuesEmail = (values2[0] , values2[1], values2[2] , email)
+                    self.tree.item(idCredential , values=updateValuesEmail)
+
+                    messagebox.showinfo("Username was correctly updated !                                                               .")
+
+                    self.inputEmailUpdate.set("")
                     self.inputIDVar.set(0)
             else:
                 messagebox.showerror("You have to choose an option and write the ID credential before update                                                                       .")
 
 
-        elif filterChoose == "PRODUCT":
-            messagebox.showerror("You have to choose an option and write the ID credential before update                                                                       .")
+        elif filterChoose == "SERVICE":
 
+            if not product == "" and idCredential > 0:
+              
+              if self.tree.exists(idCredential):
+                  
+                  crdManager.changeProduct(idusr , idCredential , product)
+
+                  values3 = self.tree.item(idCredential , 'values')
+                  updateValuesProduct = (values3[0] , values3[1] , values3[2] , values3[3] , product)
+                  self.tree.item(idCredential , values=updateValuesProduct)
+
+                  messagebox.showinfo("Password was correctly updated !                                                               .")
+
+                  self.inputIDVar.set(0)
+                  self.inputProductUpdate.set("")
+            else:
+                messagebox.showerror("You have to choose an option and write the ID credential before update                                                                       .")
 
         elif filterChoose == "CHANGE ALL":
-            messagebox.showerror("You have to choose an option and write the ID credential before update                                                                       .")
+
+            if not (username == "" or password == "" or email == "" or product == "") and  idCredential > 0:
+
+                if self.tree.exists(idCredential): 
+
+                    crdManager.changeEmail(idusr , idCredential , email)
+                    crdManager.changePassword(idusr , idCredential , password)
+                    crdManager.changeProduct(idusr , idCredential , product)
+                    crdManager.changeUsername(idusr , idCredential , username)
+
+                    valuesUpdateAll = (idCredential , username , password , email , product)
+                    self.tree.item(idCredential , values=valuesUpdateAll)
+
+                    messagebox.showinfo("All data was correctly updated !                                                               .")
+
+                    self.inputIDVar.set(0)
+                    self.inputEmailUpdate.set("")
+                    self.inputPasswordUpdate.set("")
+                    self.inputProductUpdate.set("")
+                    self.inputUsernameUpdate.set("")
+            else:
+                 messagebox.showerror("You have to choose an option and write the ID credential before update , all the input field must be not empty                                                                       .")
         
+    def deleteCredential(self):
+        idCredential = self.inputIDVar.get()
+        iduser = self.idUser[0]
+        crdManager = credentialsManagement()
+        if idCredential>0:
+
+            if self.tree.exists(idCredential):
+                crdManager.deleteCredentialByID(iduser, idCredential)
+
+                self.tree.delete(idCredential)
+                messagebox.showinfo("The credential row was correctly deleted                                                                                                            .")
+            else:
+                messagebox.showerror("ID credential dosen't exist                                                                                                                        .")
+        else:       
+            messagebox.showerror("You have to insert the ID credential before to click on delete                                                                                                                        .")    
 
 
     def on_hover(self, e):
