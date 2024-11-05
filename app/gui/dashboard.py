@@ -237,7 +237,6 @@ class DashBoard:
 
 
        #FILTER SEARCH TAB
-       #, ipadx=40, ipady=7  [x] lunghezza [y] altezza
 
         self.EntryFilterSearch = tk.Entry(self.tab3 , width=34 , font=("Inter" , 10) , background="white" , foreground="black")
         self.EntryFilterSearch.grid(row=1 , column=0 , sticky="n" , pady=(100,0) , ipadx=40, ipady=7)
@@ -250,7 +249,7 @@ class DashBoard:
 
         self.openMenuChoose = tk.OptionMenu(self.tab3 , self.optionVariable , * self.optionList)
         self.openMenuChoose.config(border=0,  highlightthickness=0 , bg="#3D4985" ,  foreground="white" , font="Inter 11")
-        self.openMenuChoose.grid(row=1 , column=0, sticky="n" ,padx=(0,450), pady=(101,0) , ipady=5)
+        self.openMenuChoose.grid(row=1 , column=0, sticky="n" ,padx=(0,500), pady=(99,0) , ipady=5)
 
         imgSearch = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/magnifying-glass.png"
         self.imageOpen2 = Image.open(imgSearch).resize((30,30))
