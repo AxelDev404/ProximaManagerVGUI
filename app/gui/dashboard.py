@@ -598,15 +598,15 @@ class DashBoard:
                     valUpdateUsername = (values1[0] , username , values1[2] , values1[3] , values1[4])
                     self.tree.item(idCredential , values=valUpdateUsername)
 
-                    messagebox.showinfo("Username was correctly updated !                                                               .")
+                    messagebox.showinfo("Proxima Message                                                             " , "Username was correctly changed")
 
                     self.inputUsernameUpdate.set("")
                     self.inputIDVar.set(0)
                 else:
-                    messagebox.showerror("Database internal error!")
+                    messagebox.showerror("Proxima Message                                                             " , "Database internal error! the system doesn't found the id credential")
             
             else: 
-                messagebox.showerror("Unable to change the username because the input field is empty or the ID is invalid !                                                    .")
+                messagebox.showerror("Proxima Message                                                                 ","Unable to change the username because the input field is empty or the ID is invalid !")
 
 
         elif filterChoose == "PASSWORD":
@@ -621,14 +621,14 @@ class DashBoard:
                     updateValues = (values[0] , values[1] , password)  #ricera delle colonne corrette nell tree con gli indici giusti
                     self.tree.item(idCredential , values=updateValues) #ricera delle colonne corrette nell tree
 
-                    messagebox.showinfo("Password was correctly updated !                                                               .")
+                    messagebox.showinfo("Proxima Massage                                                              ","Password was correctly changed")
 
                     self.inputPasswordUpdate.set("")
                     self.inputIDVar.set(0)
                 else:
-                    messagebox.showerror("Database internal error!")
+                    messagebox.showerror("Proxima Message                                                             " , "Database internal error! the system doesn't found the id credential")
             else:
-                messagebox.showerror("You have to choose an option and write the ID credential before update                                                                       .")
+                messagebox.showerror("Proxima Message                                                                 ","Unable to change the password because the input field is empty or the ID is invalid !")
 
 
         elif filterChoose == "EMAIL":
@@ -643,19 +643,21 @@ class DashBoard:
                     updateValuesEmail = (values2[0] , values2[1], values2[2] , email)
                     self.tree.item(idCredential , values=updateValuesEmail)
 
-                    messagebox.showinfo("Username was correctly updated !                                                               .")
+                    messagebox.showinfo()
 
-                    self.inputEmailUpdate.set("")
+                    self.inputEmailUpdate.set("Proxima Massage                                                              ","Email was correctly changed")
                     self.inputIDVar.set(0)
+                else:
+                    messagebox.showerror("Proxima Message                                                             " , "Database internal error! the system doesn't found the id credential")
             else:
-                messagebox.showerror("You have to choose an option and write the ID credential before update                                                                       .")
+                messagebox.showerror("Proxima Message                                                                 ","Unable to change the email because the input field is empty or the ID is invalid !")
 
 
         elif filterChoose == "SERVICE":
 
             if not product == "" and idCredential > 0:
               
-              if self.tree.exists(idCredential):
+                if self.tree.exists(idCredential):
                   
                   crdManager.changeProduct(idusr , idCredential , product)
 
@@ -663,12 +665,15 @@ class DashBoard:
                   updateValuesProduct = (values3[0] , values3[1] , values3[2] , values3[3] , product)
                   self.tree.item(idCredential , values=updateValuesProduct)
 
-                  messagebox.showinfo("Password was correctly updated !                                                               .")
+                  messagebox.showinfo("Proxima Massage                                                              ","Service was correctly changed")
 
                   self.inputIDVar.set(0)
                   self.inputProductUpdate.set("")
+
+                else:
+                    messagebox.showerror("Proxima Message                                                             " , "Database internal error! the system doesn't found the id credential")
             else:
-                messagebox.showerror("You have to choose an option and write the ID credential before update                                                                       .")
+                messagebox.showerror("Proxima Message                                                                 ","Unable to change the service because the input field is empty or the ID is invalid !")
 
         elif filterChoose == "CHANGE ALL":
 
@@ -684,18 +689,20 @@ class DashBoard:
                     valuesUpdateAll = (idCredential , username , password , email , product)
                     self.tree.item(idCredential , values=valuesUpdateAll)
 
-                    messagebox.showinfo("All data was correctly updated !                                                               .")
+                    messagebox.showinfo("Proxima Message                                                                 ","All data was correctly changed")
 
                     self.inputIDVar.set(0)
                     self.inputEmailUpdate.set("")
                     self.inputPasswordUpdate.set("")
                     self.inputProductUpdate.set("")
                     self.inputUsernameUpdate.set("")
+                else:
+                    messagebox.showerror("Proxima Message                                                             " , "Database internal error! the system doesn't found the id credential")
             else:
-                 messagebox.showerror("You have to choose an option and write the ID credential before update , all the input field must be not empty                                                                       .")
+                 messagebox.showerror("Proxima Message                                                                 ","Unable to change all data because one or more input field is empty or the ID is invalid !")
         
-        elif filterChoose == "":
-             messagebox.showerror("You have to choose an option first from the filter menu                                                                                                               .")
+        elif not(filterChoose == "USERNAME" or filterChoose == "PASSWORD" or filterChoose == "SERVICE" or filterChoose == "EMAIL" or filterChoose == "CHANGE ALL"):
+             messagebox.showerror("Proxima Message                                                                     " , "Choose an option from the filter menu before click update")
 
 
     def deleteCredential(self):
@@ -709,12 +716,12 @@ class DashBoard:
                 crdManager.deleteCredentialByID(iduser, idCredential)
 
                 self.tree.delete(idCredential)
-                messagebox.showinfo("The credential row was correctly deleted                                                                                                            .")
+                messagebox.showinfo("Proxima Message                                                                        ","The credential was correctly deleted")
                 self.inputIDVar.set(0)
             else:
-                messagebox.showerror("ID credential dosen't exist                                                                                                                        .")
+                    messagebox.showerror("Proxima Message                                                                   " , "Database internal error! the system doesn't found the id credential")
         else:       
-            messagebox.showerror("You have to insert the ID credential before to click on delete                                                                                                                        .")    
+            messagebox.showerror("Proxima Message                                                                           ","You have to insert the ID credential before to click on delete")    
 
 
     def changeCredentialProfile(self):
@@ -733,43 +740,43 @@ class DashBoard:
 
             if not username == "":
                 usrManager.changeUsenrame(idusr , username)
-                messagebox.showinfo("Username changed                                                                                                                                            .")
+                messagebox.showinfo("Proxima Message                                                                   ","Username correctly changed")
                 from .main_window import MainWindow #richiamo qui per evitare problemi di loop nel routing
 
                 self.root.destroy()
                 goLogIn = tk.Tk()
                 quit =  MainWindow(goLogIn)
             else:
-                messagebox.showerror("Username field can't be empty                                                                                                                              .")
+                messagebox.showerror("Proxima Message                                                                   ","Username field can't be empty")
 
         elif filterUpdate == "PASSWORD":
 
             if not (password == "" or len(password) < 8):
                 usrManager.changePassword(idusr , password)
-                messagebox.showinfo("Password changed                                                                                                                                             .")
+                messagebox.showinfo("Proxima Message                                                                     ","Password correctly changed")
 
                 from .main_window import MainWindow 
                 self.root.destroy()
                 goLogIn = tk.Tk()
                 quit =  MainWindow(goLogIn)
             else: 
-                messagebox.showerror("Password field can't be empty or lower than 8 char                                                                                                                             .")
+                messagebox.showerror("Proxima Message                                                                    ","Password field can't be empty or lower than 8 char")
 
         elif filterUpdate == "EMAIL":
             
             if not email == "":
                 usrManager.changeEmail(idusr , email)
-                messagebox.showinfo("Email changed                                                                                                                                                .")
+                messagebox.showinfo("Proxima Message                                                                     ","Email correctly changed")
 
                 from .main_window import MainWindow 
                 self.root.destroy()
                 goLogIn = tk.Tk()
                 quit =  MainWindow(goLogIn)
             else:
-                messagebox.showerror("Email field can't be empty                                                                                                                               .")
+                messagebox.showerror("Proxima Message                                                                   ","Email field can't be empty")
         
-        elif filterUpdate == "":
-                messagebox.showerror("You have to select an option from the filter menu                                                                                                       .")
+        elif not(filterUpdate == "USERNAME" or filterUpdate == "PASSWORD" or filterUpdate == "EMAIL"):
+                messagebox.showerror("Proxima Message                                                                   ","You have to select an option from the filter menu")
 
 
     def on_hover(self, e):

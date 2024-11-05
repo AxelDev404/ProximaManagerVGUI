@@ -9,9 +9,6 @@ from tkinter import Tk, Label, messagebox
 sys.path.append(os.path.join(os.path.dirname(__file__), 'gui'))
 from gui import MainWindow
 
-
-
-
 def main():
     root = tk.Tk()
     

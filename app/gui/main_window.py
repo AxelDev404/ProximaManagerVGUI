@@ -113,7 +113,7 @@ class MainWindow:
         self.passwordInput.place(x=100 , y=293 , height=35)
 
     def on_closing(self):
-        if messagebox.askokcancel("Quit", "Are you sure ?                                                                                      ."):
+        if messagebox.askokcancel("Quit                                                             ", "Are you sure ?"):
             self.root.destroy()  # Chiudi la finestra
 
     def logged(self):
@@ -128,7 +128,7 @@ class MainWindow:
             dashRoot = tk.Tk()
             dash = DashBoard(dashRoot , username , password)
         else:
-            messagebox.showerror("        Invalid credentials try again                                                         .")
+            messagebox.showerror("Proxima Message                                                  ","Invalid credentials")
 
             self.inputVarUsername.set("")
             self.inputVarPassword.set("")

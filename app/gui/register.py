@@ -40,7 +40,7 @@ class Register:
         customFontRegister = tkFont.Font(family = "Tech Noir" , size=13)
         
         self.root = root
-       
+        self.root.title("PROXIMA MANAGER")
         self.size = tk.Tk.geometry(self.root,"1200x700+660+300")
         self.resizable = tk.Tk.resizable(self.root, False , False)
         self.root.attributes('-topmost' , 0) 
@@ -158,9 +158,9 @@ class Register:
                     goLogIn = tk.Tk()
                     quit =  MainWindow(goLogIn)
             else:
-                messagebox.showerror("Number phone must be equal 10 digits                                                                                                                                                 .")
+                messagebox.showerror("Proxima Message                                                             ","Number phone must be equal to 10 digits")
         else:
-            messagebox.showerror("All the fields must be not empty                                                                                                                                                         .")
+            messagebox.showerror("Proxima Message                                                             ","All the fields must be not empty")
 
 
 
