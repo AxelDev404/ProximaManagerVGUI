@@ -24,8 +24,8 @@ from logic.Credentials.Credentials import Credential
 class DashBoard:
     def __init__(self , root , usernameLOGIN , passwordLOGIN):
 
-        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
-        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
+        icon_path = "assets/icons/iconPass.ico"
+        font_path = "assets/fonts/TechNoir-8dLD.ttf"
 
         ctypes.windll.gdi32.AddFontResourceW(font_path)
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
@@ -39,10 +39,9 @@ class DashBoard:
         crdManager = credentialsManagement()
 
         self.root = root
-        self.root  = root #test private after
+        self.root  = root 
         self.root.title("PROXIMA MANAGER")
         self.size = tk.Tk.geometry(self.root , "1300x700+350+200")
-        #self.resizable = tk.Tk.resizable(self.root, False , False)
         self.root.attributes('-topmost' , 0) 
         self.root.iconbitmap(icon_path)
 
@@ -114,7 +113,6 @@ class DashBoard:
         self.tab4.grid_rowconfigure(11,weight=0)
         self.tab4.grid_rowconfigure(12,weight=0)
         self.tab4.grid_rowconfigure(13, weight=0)
-        #self.tab4.grid_rowconfigure(14, weight=0)
         self.tab4.grid_columnconfigure(0,weight=1)
 
 
@@ -132,7 +130,6 @@ class DashBoard:
         self.tab5.grid_rowconfigure(11,weight=0)
         self.tab5.grid_rowconfigure(12,weight=0)
         self.tab5.grid_rowconfigure(13, weight=0)
-        #self.tab4.grid_rowconfigure(14, weight=0)
 
         self.tab5.grid_columnconfigure(0,weight=1)
 
@@ -251,15 +248,13 @@ class DashBoard:
         self.openMenuChoose.config(border=0,  highlightthickness=0 , bg="#3D4985" ,  foreground="white" , font="Inter 11")
         self.openMenuChoose.grid(row=1 , column=0, sticky="n" ,padx=(0,500), pady=(99,0) , ipady=5)
 
-        imgSearch = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/magnifying-glass.png"
+        imgSearch = "assets/img/magnifying-glass.png"
         self.imageOpen2 = Image.open(imgSearch).resize((30,30))
         self.imageSerch = ImageTk.PhotoImage(self.imageOpen2)
         self.labelSearch = self.imageSerch
 
         self.buttonSearch= tk.Button(self.tab3 , image=self.labelSearch , background="#121528" , border=0 , padx=5 , pady=5 , activebackground="#121528" , cursor="hand2" , command=self.startSeacrch)
         self.buttonSearch.grid(row=1 , column=0 , sticky="n", pady=(101,0), padx=(380,0) )
-
-        
 
         self.tree2 = ttk.Treeview(self.tab3 , column=("ID" , "USERNAME" , "PASSWORD" , "EMAIL" , "SERVICE") , show='headings')
         
@@ -441,7 +436,7 @@ class DashBoard:
         self.AreaPersonal = tk.Frame(self.MenuFrame , width=300 , background="#111735" , height=300)
         self.AreaPersonal.pack(fill="x", side="bottom" )
 
-        img2 = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/logout.png"
+        img2 = "assets/img/logout.png"
         self.imageOpen2 = Image.open(img2).resize((42,42))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
         self.label2 = self.imageSecurty
@@ -450,14 +445,13 @@ class DashBoard:
         self.buttonQuit.pack(side="left" , padx=10 , pady=10)
 
         
-
         self.userNameToShow=usrManager.getUsernameProfile(usernameLOGIN , passwordLOGIN)
 
         self.userNameProfile = tk.Label(self.AreaPersonal , text="@"+self.userNameToShow, font="Inter 12 bold" , foreground="white" , background="#111735" , padx=7 , pady=7)
         self.userNameProfile.pack(side="left")
 
 
-        imgSettings = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/settings.png"
+        imgSettings = "assets/img/settings.png"
         self.imageOpen2 = Image.open(imgSettings).resize((40,40))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
         self.labelSettings = self.imageSecurty

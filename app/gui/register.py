@@ -17,8 +17,8 @@ from logic.User.User import User
 class Register:
     
     def __init__(self, root):
-        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
-        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
+        icon_path = "assets/icons/iconPass.ico"
+        font_path = "assets/fonts/TechNoir-8dLD.ttf"
         ctypes.windll.gdi32.AddFontResourceW(font_path)
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
 
@@ -27,7 +27,7 @@ class Register:
         customFontRegister = tkFont.Font(family = "Tech Noir" , size=13)
         
         self.root = root
-        #self.root.attributes("-fullscreen" , True)
+       
         self.size = tk.Tk.geometry(self.root,"1200x700+660+300")
         self.resizable = tk.Tk.resizable(self.root, False , False)
         self.root.attributes('-topmost' , 0) 
@@ -66,7 +66,7 @@ class Register:
         self.Slogan5MainFrame2.place(x=310 , y=150)
 
 
-        img1 = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/account-protection.png"   
+        img1 = "assets/img/account-protection.png"
         self.imageOpen1 = Image.open(img1).resize((500,500))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen1)
 

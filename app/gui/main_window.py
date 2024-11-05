@@ -16,14 +16,13 @@ from gui.dashboard import DashBoard
 from gui.register import Register
 
 from logic.User.db_user_manager import userManagement
-
 class MainWindow:
 
     def __init__(self , root) :
 
-        icon_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'icons', 'iconPass.ico')
-        img_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'img', 'account-protection.png')
-        font_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'WorkSpace', 'WorkSpace', 'Python_projects', 'ProximaManagerVGUI', 'assets' , 'fonts', 'TechNoir-8dLD.ttf')
+        font_path = "assets/fonts/TechNoir-8dLD.ttf"
+        icon_path = "assets/icons/iconPass.ico"
+        img_path = "assets/img/account-protection.png"
 
         ctypes.windll.gdi32.AddFontResourceW(font_path)
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
@@ -48,7 +47,6 @@ class MainWindow:
 
         style.configure("MainFrame.TFrame", background="#070A1C")# Colore per il primo frame
         style.configure("MainFrame2.TFrame", background="#050617")  
-        #style.configure("TButton", background="#0787FF" , relief="flat" , foreground = "white" , borderwidth = 0 , height=70)
 
         self.MainFrame2 = ttk.Frame(self.root , style="MainFrame2.TFrame", height=300 , width=400 )
         self.MainFrame2.pack(side=LEFT , fill="both", expand=True)
@@ -62,8 +60,7 @@ class MainWindow:
         self.secondaryTitleMainFrame2 = ttk.Label(self.MainFrame2 , text="Manager" , font=customFontTitle2 , background="#050617" , foreground="white")
         self.secondaryTitleMainFrame2.place(x=130 , y= 100)
 
-        img2 = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/account-protection.png"
-        self.imageOpen2 = Image.open(img2).resize((240,240))
+        self.imageOpen2 = Image.open(img_path).resize((240,240))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
 
         self.label2 = tk.Label(self.MainFrame2 , image=self.imageSecurty , bg="#050617")
@@ -76,11 +73,9 @@ class MainWindow:
         self.buttonRegister = tk.Button(self.MainFrame , text="Sign Up" , bg="#0787FF" , takefocus=0 , width=16 , height=3 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.registerPage , cursor="hand2")
         self.buttonRegister.place(x=100 , y=350)
 
-
-        img = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/login-.png"
-        self.imageOpen = Image.open(img).resize((50,50))
+        imgLogIn_path = "assets/img/login-.png"
+        self.imageOpen = Image.open(imgLogIn_path).resize((50,50))
         self.ImageUp = ImageTk.PhotoImage(self.imageOpen)
-        #self.label = tk.Label(self.MainFrame , image=self.ImageUp , bg="#0787FF")
         self.label = self.ImageUp
 
         self.buttonLogIn = tk.Button(self.MainFrame , text="LogIn", image=self.ImageUp , bg="#064988" , takefocus=0 , width=80 , height=62 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.logged , cursor="hand2")
