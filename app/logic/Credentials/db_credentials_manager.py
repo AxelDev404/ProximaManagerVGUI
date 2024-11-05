@@ -203,7 +203,7 @@ class credentialsManagement():
 
         sqlQuery = "DELETE FROM credentials WHERE id_user_credentials = %s AND id_credential = %s"
         cursor.execute(sqlQuery , (idUser , idCredential))
-
+        db.commit()
         cursor.close()
         db.close()
 

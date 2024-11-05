@@ -189,12 +189,20 @@ class DashBoard:
 
 
         #VIEW ALL CREDENTIALS TAB#
+        style.configure("Treeview", 
+                background="#131832", #black
+                foreground="#0095FF", #green  RETRO STYLE
+                fieldbackground="#131832", #black
+                rowheight=25,
+                font = ("Inter" , 10)
+                )
+        style.map("Treeview", background=[("selected", "#3D4985")])
 
-        self.tree = ttk.Treeview(self.tab2 , column=("ID" , "USERNAME" , "PASSWORD" , "EMAIL" , "SERVICE") , show='headings')
+        self.tree = ttk.Treeview(self.tab2 ,style="Treeview", column=("ID" , "USERNAME" , "PASSWORD" , "EMAIL" , "SERVICE") , show='headings')
         
         
         self.tree.column("#1", anchor=tk.CENTER)
-        self.tree.heading("#1" , text="ID")
+        self.tree.heading("#1" , text="ID" )
         self.tree.column("#2" , anchor=tk.CENTER)
         self.tree.heading("#2" , text="USERNAME")
         self.tree.column("#3", anchor=tk.CENTER)
@@ -241,8 +249,8 @@ class DashBoard:
 
 
         self.openMenuChoose = tk.OptionMenu(self.tab3 , self.optionVariable , * self.optionList)
-        self.openMenuChoose.config(border=0)
-        self.openMenuChoose.grid(row=1 , column=0, sticky="n" ,padx=(0,450), pady=(101,0) , ipady=3)
+        self.openMenuChoose.config(border=0,  highlightthickness=0 , bg="#3D4985" ,  foreground="white" , font="Inter 11")
+        self.openMenuChoose.grid(row=1 , column=0, sticky="n" ,padx=(0,450), pady=(101,0) , ipady=5)
 
         imgSearch = r"C:/Users/alexa/Desktop/WorkSpace/WorkSpace/Python_projects/ProximaManagerVGUI/assets/img/magnifying-glass.png"
         self.imageOpen2 = Image.open(imgSearch).resize((30,30))
@@ -297,8 +305,8 @@ class DashBoard:
         self.Instruction.grid(row = 1 , column=0 , pady=(80,30))
 
         self.modifyTarget = tk.OptionMenu(self.tab4 , self.manageVar , * self.manageList)
-        self.modifyTarget.config(bg="#3D4985" ,  foreground="white" , font="Inter 11")
-        self.modifyTarget.grid(row=3 , column=0, columnspan=2 , pady=(0,10) ,ipady=3 , padx=(560,0))
+        self.modifyTarget.config(bg="#3D4985" ,  foreground="white" , font="Inter 11" , border=0 ,  highlightthickness=0)
+        self.modifyTarget.grid(row=3 , column=0, columnspan=2 , pady=(0,10) ,ipady=5 , padx=(560,0))
         
         self.IdTitle = tk.Label(self.tab4 , text="ID" , font="Inter 10" ,  foreground="white" , background="#121528")
         self.IdTitle.grid(row=2 , column=0 , columnspan=2 , pady=(10,0))
@@ -341,6 +349,14 @@ class DashBoard:
 
         #PROFILE SETTINGS
 
+        self.usernameProfile = tk.StringVar()
+        self.passwordProfile = tk.StringVar()
+        self.emailProfile = tk.StringVar()
+
+        self.usernameProfile.set("")
+        self.passwordProfile.set("")
+        self.emailProfile.set("")
+
         self.Title = ttk.Label(self.tab5 , text="PROFILE SETTINGS" , font="Inter 13" , foreground="white" , background="#121528")
         self.Title.grid(row = 0 , column=0 , pady=(80,30))
 
@@ -350,29 +366,29 @@ class DashBoard:
         self.manageListSettings = ['USERNAME', 'PASSWORD' , 'EMAIL']
 
         self.modifyTargetSetting = tk.OptionMenu(self.tab5 , self.manageVarSettings , * self.manageListSettings)
-        self.modifyTargetSetting.config(bg="#3D4985" ,  foreground="white" , font="Inter 11")
-        self.modifyTargetSetting.grid(row=2 , column=0, columnspan=2 , pady=(0,10) ,ipady=3 , padx=(560,0))
+        self.modifyTargetSetting.config(bg="#3D4985" ,  foreground="white" , font="Inter 11" , border=0 ,  highlightthickness=0)
+        self.modifyTargetSetting.grid(row=2 , column=0, columnspan=2 , pady=(0,10) ,ipady=5 , padx=(560,0))
 
         self.usernameTitleSetting = tk.Label(self.tab5 , text="Username" , font="Inter 10" ,  foreground="white" , background="#121528")
         self.usernameTitleSetting.grid(row=1 , column=0 , columnspan=2)
 
-        self.usernameSetting = tk.Entry(self.tab5, textvariable=self.inputVarUsername , width=42 , border=1 , bg="white" , foreground="black" , font=("Inter" , 11))
+        self.usernameSetting = tk.Entry(self.tab5, textvariable=self.usernameProfile , width=42 , border=1 , bg="white" , foreground="black" , font=("Inter" , 11))
         self.usernameSetting.grid(row=2 , column=0 ,  columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
 
         self.passwordTitleSetting =  tk.Label(self.tab5 , text="Password" , font="Inter 10" , foreground="white" , background="#121528")
         self.passwordTitleSetting.grid(row=3 , column=0 , columnspan=2)
 
-        self.passwordSetting = tk.Entry(self.tab5, textvariable=self.inputVarPassword , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
+        self.passwordSetting = tk.Entry(self.tab5, textvariable=self.passwordProfile , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
         self.passwordSetting.grid(row=4 , column=0 , columnspan=2, pady=(0,10), ipadx=30, ipady=7)
 
         self.emailTitleSetting = tk.Label(self.tab5 ,  text="Email" , font="Inter 10" , foreground="white" , background="#121528")
         self.emailTitleSetting.grid(row=5 , column=0 ,  columnspan=2 )
 
-        self.emailSetting = tk.Entry(self.tab5, textvariable=self.inputVarEmail , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
+        self.emailSetting = tk.Entry(self.tab5, textvariable=self.emailProfile , width=42 , font=("Inter",11) , border=1 , bg="white" , foreground="black")
         self.emailSetting.grid(row = 6 , column=0 , columnspan=2 , pady=(0,10), ipadx=30, ipady=7)
 
-        self.buttonAdd = tk.Button(self.tab5 , text="Update credential" , bg="#3D4985" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0)
-        self.buttonAdd.grid(row=7 , column=0 , columnspan=2 , pady=(20,10))
+        self.buttonChangeProfile= tk.Button(self.tab5 , text="Update profile" , bg="#3D4985" , takefocus=0 , width=26 , height=2 , foreground="white" , font=customFontRegister , borderwidth=0 ,  command=self.changeCredentialProfile)
+        self.buttonChangeProfile.grid(row=7 , column=0 , columnspan=2 , pady=(20,10))
 
         self.Title2 = ttk.Label(self.tab5 , text="PERSONAL INFORMATION" , font="Inter 13" , foreground="white" , background="#121528")
         self.Title2.grid(row=8 , column=0 , columnspan=2 , pady=(50,0))
@@ -397,7 +413,7 @@ class DashBoard:
 
     
         self.Title = tk.Label(self.MenuFrame , text="Proxima Manger" , font=customFontSingIn , background="#1B1A36" , foreground="white")
-        self.Title.pack(fill="x" , pady=40)
+        self.Title.pack(fill="x" , pady=40 , ipadx=14)
 
         self.addCredentialsTab = tk.Button(self.MenuFrame , text="Add Credentials", font="Inter 13" , background="#1D2447", foreground="white", command=lambda: self.showTab(self.tab1) , border=0 , padx=5 , pady=5 , height=3 , cursor="hand2")
         self.addCredentialsTab.pack(fill="x" , pady=3)
@@ -677,6 +693,10 @@ class DashBoard:
             else:
                  messagebox.showerror("You have to choose an option and write the ID credential before update , all the input field must be not empty                                                                       .")
         
+        elif filterChoose == "":
+             messagebox.showerror("You have to choose an option first from the filter menu                                                                                                               .")
+
+
     def deleteCredential(self):
         idCredential = self.inputIDVar.get()
         iduser = self.idUser[0]
@@ -689,10 +709,66 @@ class DashBoard:
 
                 self.tree.delete(idCredential)
                 messagebox.showinfo("The credential row was correctly deleted                                                                                                            .")
+                self.inputIDVar.set(0)
             else:
                 messagebox.showerror("ID credential dosen't exist                                                                                                                        .")
         else:       
             messagebox.showerror("You have to insert the ID credential before to click on delete                                                                                                                        .")    
+
+
+    def changeCredentialProfile(self):
+        filterUpdate = self.manageVarSettings.get()
+
+        username = self.usernameSetting.get()
+        password = self.passwordSetting.get()
+        email = self.emailSetting.get()
+
+        idusr = self.idUser[0]
+
+        usrManager = userManagement()
+
+
+        if filterUpdate == "USERNAME":
+
+            if not username == "":
+                usrManager.changeUsenrame(idusr , username)
+                messagebox.showinfo("Username changed                                                                                                                                            .")
+                from gui.main_window import MainWindow #richiamo qui per evitare problemi di loop nel routing
+
+                self.root.destroy()
+                goLogIn = tk.Tk()
+                quit =  MainWindow(goLogIn)
+            else:
+                messagebox.showerror("Username field can't be empty                                                                                                                              .")
+
+        elif filterUpdate == "PASSWORD":
+
+            if not (password == "" or len(password) < 8):
+                usrManager.changePassword(idusr , password)
+                messagebox.showinfo("Password changed                                                                                                                                             .")
+
+                from gui.main_window import MainWindow 
+                self.root.destroy()
+                goLogIn = tk.Tk()
+                quit =  MainWindow(goLogIn)
+            else: 
+                messagebox.showerror("Password field can't be empty or lower than 8 char                                                                                                                             .")
+
+        elif filterUpdate == "EMAIL":
+            
+            if not email == "":
+                usrManager.changeEmail(idusr , email)
+                messagebox.showinfo("Email changed                                                                                                                                                .")
+
+                from gui.main_window import MainWindow 
+                self.root.destroy()
+                goLogIn = tk.Tk()
+                quit =  MainWindow(goLogIn)
+            else:
+                messagebox.showerror("Email field can't be empty                                                                                                                               .")
+        
+        elif filterUpdate == "":
+                messagebox.showerror("You have to select an option from the filter menu                                                                                                       .")
 
 
     def on_hover(self, e):

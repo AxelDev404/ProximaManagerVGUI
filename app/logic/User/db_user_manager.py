@@ -123,3 +123,60 @@ class userManagement():
             return email 
         else:
             print("DEBUG : Cant get the email from user")
+
+    
+    def changeUsenrame(self , idusr , usernameToUpdate):
+        db = self.connection()
+        cursor = db.cursor()
+
+        sqlQuery = "UPDATE user SET username = %s WHERE id_user = %s"
+        cursor.execute(sqlQuery , (usernameToUpdate , idusr))
+        db.commit()
+
+        usr =  cursor.fetchone()
+
+        cursor.close()
+        db.close()
+
+        if usr:
+            print("DEBUG : Username was correctly changed")
+        else:
+            print("DEBUG : Unable to change the username")
+
+    
+    def changePassword(self, idusr , passwordToUpdate):
+        db = self.connection()
+        cursor = db.cursor()
+
+        sqlQuery = "UPDATE user SET pwd = %s WHERE id_user = %s"
+        cursor.execute(sqlQuery , (passwordToUpdate , idusr))
+        db.commit()
+
+        usr = cursor.fetchone()
+
+        cursor.close()
+        db.close()
+
+        if usr: 
+            print("DEBUG : Password was correctly changed")
+        else:
+            print("DEBUG : Unable to change the Password")
+
+
+    def changeEmail(self, idusr , emailToUpdate):
+        db = self.connection()
+        cursor = db.cursor()
+
+        sqlQuery = "UPDATE user SET email = %s WHERE id_user = %s"
+        cursor.execute(sqlQuery , (emailToUpdate , idusr))
+        db.commit()
+
+        usr = cursor.fetchone()
+
+        cursor.close()
+        db.close()
+
+        if usr:
+            print("DEBUG : email was correctly changed")
+        else:
+            print("DEBUG : Unable to change the email")

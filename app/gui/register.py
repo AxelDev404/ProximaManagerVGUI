@@ -128,21 +128,27 @@ class Register:
         email = self.emailInput.get().strip()
         name = self.nameTextInput.get().strip()
         number_phone = self.phoneTextInput.get().strip()
-
-        
         usrManger = userManagement()
-        usr = User(username , password , name , email , number_phone)
+
+        if not(username == "" or password == "" or email == "" or name == "" or number_phone == ""):
+
+            if len(number_phone) == 10:
         
+                usr = User(username , password , name , email , number_phone)
+        
+                if usrManger.checkExistanceUserinDb(username , email):
+                    print("DEBUG : false")
+                else:
+                    from gui.main_window import MainWindow
+                    usrManger.signIn(usr)
 
-        if usrManger.checkExistanceUserinDb(username , email):
-            print("DEBUG : false")
+                    self.root.destroy()
+                    goLogIn = tk.Tk()
+                    quit =  MainWindow(goLogIn)
+            else:
+                messagebox.showerror("Number phone must be equal 10 digits                                                                                                                                                 .")
         else:
-            from gui.main_window import MainWindow
-            usrManger.signIn(usr)
-
-            self.root.destroy()
-            goLogIn = tk.Tk()
-            quit =  MainWindow(goLogIn)
+            messagebox.showerror("All the fields must be not empty                                                                                                                                                         .")
 
 
 
