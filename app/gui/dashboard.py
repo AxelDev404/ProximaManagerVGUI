@@ -79,6 +79,7 @@ class DashBoard:
         self.tab3 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
         self.tab4 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
         self.tab5 = tk.Frame(self.MainFrame , width=1500 , bg = "#121528")
+        self.tab6 = tk.Frame(self.MainFrame , width=1500 , bg="#121528")
 
         for tab in [self.tab1]:
             tab.grid_rowconfigure(0, weight=0)  # Permette l'espansione della colonna
@@ -140,10 +141,12 @@ class DashBoard:
 
         self.tab5.grid_columnconfigure(0,weight=1)
 
-        
+        self.tab6.grid_rowconfigure(0 , weight=0) #TITLE
+        self.tab6.grid_rowconfigure(1 , weight=0) #SHOW GENERATED PWD 
+        self.tab6.grid_rowconfigure(2 , weight=0) #BUTTON {GENEATE PASSWORD}
+        self.tab6.grid_rowconfigure(3 , weight=0) #DESCRIPTION ....
 
-        self.labelTab5 = tk.Label(self.tab5, text="TEST TAB 5")
-
+        self.tab6.grid_columnconfigure(0, weight=1)
 
         #ADD CREDENTIAL TAB#
 
@@ -427,6 +430,12 @@ class DashBoard:
 
         self.ManageCredentials = tk.Button(self.MenuFrame , text="Manage Credentials" , font="Inter 13" , background="#1D2447", foreground="white" , command=lambda: self.showTab(self.tab4) , border=0 , padx=5 , pady=5 , height=3 , cursor="hand2")
         self.ManageCredentials.pack(fill="x" , pady=3)
+
+        self.GeneratePassword = tk.Button(self.MenuFrame , text="Password generator" , font="Inter 13" , background="#1D2447", foreground="white" , command=lambda: self.showTab(self.tab6) , border=0 , padx=5 , pady=5 , height=3 , cursor="hand2")
+        self.GeneratePassword.pack(fill="x" , pady=3 )
+
+        self.GeneratePassword.bind("<Enter>" , self.on_hover5)
+        self.GeneratePassword.bind("<Leave>" , self.leave_hover5)
 
         self.addCredentialsTab.bind("<Enter>" ,self.on_hover)
         self.addCredentialsTab.bind("<Leave>" ,self.leave_hover)
@@ -787,13 +796,13 @@ class DashBoard:
 
     def on_hover2(self, e):
         self.ViewAllCredentialsTab.config(background = "#121528")
-    def leave_hover2(self, a):
+    def leave_hover2(self, e):
         self.ViewAllCredentialsTab.config(background = "#1D2447")
 
 
     def on_hover3(self, e):
         self.FilterSearch.config(background = "#121528")
-    def leave_hover3(self, a):
+    def leave_hover3(self, e):
         self.FilterSearch.config(background = "#1D2447")
 
 
@@ -801,3 +810,8 @@ class DashBoard:
         self.ManageCredentials.config(background = "#121528")
     def leave_hover4(self , e):
         self.ManageCredentials.config(background = "#1D2447")
+
+    def on_hover5(self , e):
+        self.GeneratePassword.config(background="#121528")
+    def leave_hover5(self , e):
+        self.GeneratePassword.config(background="#1D2447")
