@@ -1,6 +1,6 @@
-from gui.main_window import MainWindow
-from gui.dashboard import DashBoard
-from gui.register import Register
+from .main_window import MainWindow
+from .dashboard import DashBoard
+from .register import Register
 
 version = "1.0.0"
 

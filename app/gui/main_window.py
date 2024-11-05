@@ -6,23 +6,37 @@ from tkinter import font
 import tkinter.font as tkFont 
 from tkinter import PhotoImage
 from tkinter import messagebox
-
+import os
+import sys
 import ctypes
 from PIL import Image, ImageTk  
 
-import os
 
-from gui.dashboard import DashBoard
-from gui.register import Register
+from .dashboard import DashBoard
+from .register import Register
 
 from logic.User.db_user_manager import userManagement
+
+def resource_path(relative_path):
+
+    try:
+        # PyInstaller crea una cartella temporanea e memorizza il percorso in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    except FileNotFoundError:
+            print("Immagine 'account-protection.png' non trovata.")
+    except Exception as e:
+            print(f"Si è verificato un errore: {e}")
+    return os.path.join(base_path, relative_path)
+
 class MainWindow:
 
     def __init__(self , root) :
 
-        font_path = "assets/fonts/TechNoir-8dLD.ttf"
-        icon_path = "assets/icons/iconPass.ico"
-        img_path = "assets/img/account-protection.png"
+        font_path = resource_path("assets/fonts/TechNoir-8dLD.ttf")
+        icon_path = resource_path("assets/icons/iconPass.ico")
+        img_path = resource_path("assets/img/account-protection.png")
 
         ctypes.windll.gdi32.AddFontResourceW(font_path)
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
@@ -34,7 +48,7 @@ class MainWindow:
         self.resize= tk.Tk.resizable(self.root, False,False) #false 1 block reizable x 2 false resizable y
         self.root.attributes('-topmost' , 0) #sovrapposizione delle fiestre mettendo in secondo piano se seleziono altro
         self.root.iconbitmap(icon_path)
-
+        self.root.protocol("WM_DELETE_WINDOW" , self.on_closing) 
         customFontTitle1 = tkFont.Font(family = "Tech Noir" ,size=36)
         customFontTitle2 = tkFont.Font(family = "Tech Noir" , size=24)
         customFontRegister = tkFont.Font(family = "Tech Noir" , size=14)
@@ -73,9 +87,10 @@ class MainWindow:
         self.buttonRegister = tk.Button(self.MainFrame , text="Sign Up" , bg="#0787FF" , takefocus=0 , width=16 , height=3 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.registerPage , cursor="hand2")
         self.buttonRegister.place(x=100 , y=350)
 
-        imgLogIn_path = "assets/img/login-.png"
+        imgLogIn_path = resource_path("assets/img/login-.png")
         self.imageOpen = Image.open(imgLogIn_path).resize((50,50))
         self.ImageUp = ImageTk.PhotoImage(self.imageOpen)
+
         self.label = self.ImageUp
 
         self.buttonLogIn = tk.Button(self.MainFrame , text="LogIn", image=self.ImageUp , bg="#064988" , takefocus=0 , width=80 , height=62 , foreground="white" , font=customFontRegister , borderwidth=0 , command=self.logged , cursor="hand2")
@@ -97,7 +112,9 @@ class MainWindow:
         self.passwordInput = tk.Entry(self.MainFrame , width=41 , font=("Inter" , 11) , takefocus=0 , show="•" , borderwidth=1 , textvariable=self.inputVarPassword)
         self.passwordInput.place(x=100 , y=293 , height=35)
 
-
+    def on_closing(self):
+        if messagebox.askokcancel("Quit", "Are you sure ?                                                                                      ."):
+            self.root.destroy()  # Chiudi la finestra
 
     def logged(self):
 

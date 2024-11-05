@@ -9,8 +9,8 @@ class credentialsManagement():
     def db_connect(self):
         return mysql.connector.connect(
             host = "localhost",
-            user = "username",
-            password = "password",
+            user = "", #username
+            password = "", #password
             database = "credentials_management"
         )
 

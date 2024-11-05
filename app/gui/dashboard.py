@@ -11,21 +11,28 @@ import ctypes
 from PIL import Image, ImageTk  
 
 import os
-
-import mysql.connector 
-from mysql.connector import Error
+import sys
 
 from logic.User.db_user_manager import userManagement
 from logic.Credentials.db_credentials_manager import credentialsManagement
 from logic.Credentials.Credentials import Credential
 
+def resource_path(relative_path):
+
+    try:
+        # PyInstaller crea una cartella temporanea e memorizza il percorso in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 
 class DashBoard:
     def __init__(self , root , usernameLOGIN , passwordLOGIN):
 
-        icon_path = "assets/icons/iconPass.ico"
-        font_path = "assets/fonts/TechNoir-8dLD.ttf"
+        icon_path = resource_path("assets/icons/iconPass.ico")
+        font_path = resource_path("assets/fonts/TechNoir-8dLD.ttf")
 
         ctypes.windll.gdi32.AddFontResourceW(font_path)
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
@@ -248,7 +255,7 @@ class DashBoard:
         self.openMenuChoose.config(border=0,  highlightthickness=0 , bg="#3D4985" ,  foreground="white" , font="Inter 11")
         self.openMenuChoose.grid(row=1 , column=0, sticky="n" ,padx=(0,500), pady=(99,0) , ipady=5)
 
-        imgSearch = "assets/img/magnifying-glass.png"
+        imgSearch = resource_path("assets/img/magnifying-glass.png")
         self.imageOpen2 = Image.open(imgSearch).resize((30,30))
         self.imageSerch = ImageTk.PhotoImage(self.imageOpen2)
         self.labelSearch = self.imageSerch
@@ -436,7 +443,7 @@ class DashBoard:
         self.AreaPersonal = tk.Frame(self.MenuFrame , width=300 , background="#111735" , height=300)
         self.AreaPersonal.pack(fill="x", side="bottom" )
 
-        img2 = "assets/img/logout.png"
+        img2 = resource_path("assets/img/logout.png")
         self.imageOpen2 = Image.open(img2).resize((42,42))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
         self.label2 = self.imageSecurty
@@ -445,13 +452,14 @@ class DashBoard:
         self.buttonQuit.pack(side="left" , padx=10 , pady=10)
 
         
+
         self.userNameToShow=usrManager.getUsernameProfile(usernameLOGIN , passwordLOGIN)
 
         self.userNameProfile = tk.Label(self.AreaPersonal , text="@"+self.userNameToShow, font="Inter 12 bold" , foreground="white" , background="#111735" , padx=7 , pady=7)
         self.userNameProfile.pack(side="left")
 
 
-        imgSettings = "assets/img/settings.png"
+        imgSettings = resource_path("assets/img/settings.png")
         self.imageOpen2 = Image.open(imgSettings).resize((40,40))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen2)
         self.labelSettings = self.imageSecurty
@@ -464,7 +472,7 @@ class DashBoard:
 
     
     def logOut(self):
-        from gui.main_window import MainWindow #richiamo qui per evitare problemi di loop nel routing
+        from .main_window import MainWindow #richiamo qui per evitare problemi di loop nel routing
 
         self.root.destroy()
         goLogIn = tk.Tk()
@@ -726,7 +734,7 @@ class DashBoard:
             if not username == "":
                 usrManager.changeUsenrame(idusr , username)
                 messagebox.showinfo("Username changed                                                                                                                                            .")
-                from gui.main_window import MainWindow #richiamo qui per evitare problemi di loop nel routing
+                from .main_window import MainWindow #richiamo qui per evitare problemi di loop nel routing
 
                 self.root.destroy()
                 goLogIn = tk.Tk()
@@ -740,7 +748,7 @@ class DashBoard:
                 usrManager.changePassword(idusr , password)
                 messagebox.showinfo("Password changed                                                                                                                                             .")
 
-                from gui.main_window import MainWindow 
+                from .main_window import MainWindow 
                 self.root.destroy()
                 goLogIn = tk.Tk()
                 quit =  MainWindow(goLogIn)
@@ -753,7 +761,7 @@ class DashBoard:
                 usrManager.changeEmail(idusr , email)
                 messagebox.showinfo("Email changed                                                                                                                                                .")
 
-                from gui.main_window import MainWindow 
+                from .main_window import MainWindow 
                 self.root.destroy()
                 goLogIn = tk.Tk()
                 quit =  MainWindow(goLogIn)

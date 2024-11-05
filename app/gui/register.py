@@ -6,19 +6,32 @@ from tkinter import font
 import tkinter.font as tkFont 
 from tkinter import PhotoImage
 from tkinter import messagebox
-
+import os
+import sys
 import ctypes
 from PIL import Image, ImageTk  
 
-import os
 from logic.User.db_user_manager import userManagement 
 from logic.User.User import User
 
+
+def resource_path(relative_path):
+
+    try:
+        # PyInstaller crea una cartella temporanea e memorizza il percorso in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+
 class Register:
     
+    
     def __init__(self, root):
-        icon_path = "assets/icons/iconPass.ico"
-        font_path = "assets/fonts/TechNoir-8dLD.ttf"
+        icon_path = resource_path("assets/icons/iconPass.ico")
+        font_path = resource_path("assets/fonts/TechNoir-8dLD.ttf")
         ctypes.windll.gdi32.AddFontResourceW(font_path)
         ctypes.windll.gdi32.AddFontResourceExW(font_path, 0x10, 0)
 
@@ -65,8 +78,7 @@ class Register:
         self.Slogan5MainFrame2 = ttk.Label(self.MainFrame2 , text="rules" , font=customFontSlogan , foreground="#698CFF" , background="#0D112B")
         self.Slogan5MainFrame2.place(x=310 , y=150)
 
-
-        img1 = "assets/img/account-protection.png"
+        img1 = resource_path("assets/img/account-protection.png")
         self.imageOpen1 = Image.open(img1).resize((500,500))
         self.imageSecurty = ImageTk.PhotoImage(self.imageOpen1)
 
