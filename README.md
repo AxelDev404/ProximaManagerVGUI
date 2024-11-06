@@ -36,7 +36,7 @@ INSTRUCTION :
 
 
 
-
+If you can't delete or update your credentials on the first launch in the .exe file, simply restart the program, after which it should never give you this problem again.
 
 
 
