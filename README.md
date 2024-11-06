@@ -30,10 +30,28 @@ Add credentials :
 
 Filter search :
 
-![FilterProxima](https://github.com/user-attachments/assets/78f3c4b2-114c-4492-8ac3-d34a28c03029)
+![ProximaFilter](https://github.com/user-attachments/assets/7b8681c3-c744-4e60-ba1f-6ee4badc0666)
+
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
 View all credentials :
 
-![ViewAllProxima](https://github.com/user-attachments/assets/3a8e433d-8ddc-4bb7-8200-88a35fd7a24e)
+![proximaNewScreenViewAll](https://github.com/user-attachments/assets/6e1c069d-60d3-4f3e-ad41-b7e0e77eb747)
+
+
+Manage Credentials :
+
+![ProximaAddANDDelet](https://github.com/user-attachments/assets/87f2a905-b514-42eb-841a-31f778404ecf)
+
+Profile Settings : 
+
+![ProximaSettings](https://github.com/user-attachments/assets/5dc1fe73-8981-429c-92e3-e233387c1bf3)
+
+
+
+Developed by AxelDev404 
+
+The rights are reserved for AxelDev404, if someone sold you this program it means that you have been scammed.
+
+
