@@ -1,6 +1,46 @@
 # ProximaManagerVGUI
 GUI version of ProximaManager 
 
+
+INSTRUCTION :
+
+1] Create the database from mysql shell
+
+2] Execute the sql scritp in DataBase folder (You have to connect mysql to your machine first) 
+
+3] Put your mysql password and username in db_credential_management , db_user_managemet classes  
+
+
+
+4] Launch in the VsCode terminal this command to create the executable file (navigate with the terminal in the principal folder than you can execute the command on terminal, Just copy all and paste)
+ 
+  pyinstaller --onefile --noconsole --icon=assets/icons/iconPass.ico `
+  --add-data "app/gui;gui" `
+  --add-data "app/logic;logic" `
+  --add-data "assets/fonts/TechNoir-8dLD.ttf;assets/fonts" `
+  --add-data "assets/icons/iconPass.ico;assets/icons" `
+  --add-data "assets/img/account-protection.png;assets/img" `
+  --add-data "assets/img/cyber.png;assets/img" `
+  --add-data "assets/img/login-.png;assets/img" `
+  --add-data "assets/img/logout.png;assets/img" `
+  --add-data "assets/img/magnifying-glass.png;assets/img" `
+  --add-data "assets/img/settings.png;assets/img" `
+  --hidden-import=tkinter.ttk `
+  --hidden-import=tkinter.messagebox `
+  --hidden-import=ctypes `
+  --hidden-import=PIL `
+  --hidden-import=PIL.Image `
+  --hidden-import=PIL.ImageTk `
+  --hidden-import=mysql.connector `
+  app\ProximaManager.py
+
+
+
+
+
+
+
+
 LogIn Pannel : 
 
 ![logInProximaManager](https://github.com/user-attachments/assets/6253b1af-1bad-4090-9e61-5444db73cfe7)
