@@ -9,8 +9,8 @@ class userManagement():
     def connection(self):
         return mysql.connector.connect(
             host = "localhost" , 
-            user = "rootAlex" , #username
-            password = "root2003A03", #password
+            user = "" , #username
+            password = "", #password
             database = "credentials_management"
             #auth_plugin='mysql_native_password'
         )
